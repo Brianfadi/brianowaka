@@ -11,6 +11,57 @@ use Illuminate\Support\Facades\Route;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Diagnostic route for checking assets in production
+Route::get('/debug-assets', function() {
+    $manifestPath = public_path('build/manifest.json');
+    $manifestExists = file_exists($manifestPath);
+    
+    $data = [
+        'environment' => app()->environment(),
+        'public_path' => public_path(),
+        'base_path' => base_path(),
+        'manifest_path' => $manifestPath,
+        'manifest_exists' => $manifestExists,
+        'manifest_readable' => $manifestExists && is_readable($manifestPath),
+        'app_url' => config('app.url'),
+        'asset_url' => config('app.asset_url'),
+    ];
+    
+    if ($manifestExists) {
+        $data['manifest_content'] = json_decode(file_get_contents($manifestPath), true);
+        $cssFile = $data['manifest_content']['resources/css/app.css']['file'] ?? null;
+        $jsFile = $data['manifest_content']['resources/js/app.js']['file'] ?? null;
+        
+        if ($cssFile) {
+            $cssPath = public_path('build/' . $cssFile);
+            $data['css_file'] = $cssFile;
+            $data['css_path'] = $cssPath;
+            $data['css_exists'] = file_exists($cssPath);
+            $data['css_url'] = asset('build/' . $cssFile);
+        }
+        
+        if ($jsFile) {
+            $jsPath = public_path('build/' . $jsFile);
+            $data['js_file'] = $jsFile;
+            $data['js_path'] = $jsPath;
+            $data['js_exists'] = file_exists($jsPath);
+            $data['js_url'] = asset('build/' . $jsFile);
+        }
+    }
+    
+    // Check if build directory exists
+    $buildPath = public_path('build');
+    $data['build_dir_exists'] = is_dir($buildPath);
+    if (is_dir($buildPath)) {
+        $data['build_dir_contents'] = array_map(function($file) {
+            return basename($file);
+        }, glob($buildPath . '/*'));
+    }
+    
+    return response()->json($data, 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/portfolio/{project:slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
