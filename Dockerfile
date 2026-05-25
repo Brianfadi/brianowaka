@@ -34,7 +34,10 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && mkdir -p public/storage \
+    && chmod -R 775 public/storage \
+    && chown -R www-data:www-data public/storage
 
 # Copy nginx config
 COPY docker/nginx.conf /etc/nginx/sites-available/default
@@ -42,5 +45,5 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 # Expose port
 EXPOSE 8000
 
-# At runtime: migrate, cache config/routes/views, then start services
-CMD ["/bin/sh", "-c", "php artisan migrate --force && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
+# At runtime: create storage link, migrate, cache config/routes/views, then start services
+CMD ["/bin/sh", "-c", "php artisan storage:link && php artisan migrate --force && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
