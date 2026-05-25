@@ -195,13 +195,21 @@ class SettingController extends Controller
 
             if ($field['type'] === 'file') {
                 if ($request->hasFile($key) && $request->file($key)->isValid()) {
+                    // Determine which disk to use based on environment
+                    $disk = config('filesystems.default');
+                    
                     // Delete old file if it exists
                     $old = Setting::get($key);
-                    if ($old && Storage::disk('public')->exists(ltrim(str_replace('/storage/', '', $old), '/'))) {
-                        Storage::disk('public')->delete(ltrim(str_replace('/storage/', '', $old), '/'));
+                    if ($old) {
+                        // Extract just the path without /storage/ prefix
+                        $oldPath = ltrim(str_replace('/storage/', '', $old), '/');
+                        if (Storage::disk($disk)->exists($oldPath)) {
+                            Storage::disk($disk)->delete($oldPath);
+                        }
                     }
 
-                    $path = $request->file($key)->store('uploads/settings', 'public');
+                    // Store the file
+                    $path = $request->file($key)->store('uploads/settings', $disk);
                     Setting::set($key, $path, 'text', $group);
                 }
                 // If no new file uploaded, keep existing value

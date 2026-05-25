@@ -58,7 +58,7 @@ class HomeController extends Controller
             'about_me'      => Setting::get('about_me',      'Passionate developer with expertise in modern web technologies.'),
             'contact_email' => Setting::get('contact_email', 'brian@brianowaka.com'),
             'contact_phone' => Setting::get('contact_phone', '+254 712 345 678'),
-            'profile_photo' => Setting::get('profile_photo') ? Storage::url(Setting::get('profile_photo')) : null,
+            'profile_photo' => $this->getFileUrl(Setting::get('profile_photo')),
             'social_github'  => Setting::get('social_github',  null),
             'social_linkedin'=> Setting::get('social_linkedin', null),
             'social_twitter' => Setting::get('social_twitter',  null),
@@ -100,5 +100,26 @@ class HomeController extends Controller
             'skills', 'experiences', 'settings', 'heroStats',
             'aboutTags', 'aboutStatCards', 'aboutServices', 'reviews', 'advertisements', 'heroOffer'
         ))->with('advertisementCards', $advertisements);
+    }
+
+    /**
+     * Get the full URL for a file stored in the configured disk
+     * Works with both local storage and S3
+     */
+    private function getFileUrl($path)
+    {
+        if (!$path) {
+            return null;
+        }
+
+        $disk = config('filesystems.default');
+        
+        // For S3, Storage::url() returns the full URL
+        if ($disk === 's3') {
+            return Storage::disk('s3')->url($path);
+        }
+        
+        // For local/public disk, use the standard URL helper
+        return Storage::url($path);
     }
 }
