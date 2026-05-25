@@ -30,10 +30,10 @@
                 $jsFile = $manifest['resources/js/app.js']['file'] ?? null;
             @endphp
             @if($cssFile)
-                <link rel="stylesheet" href="{{ asset('build/' . $cssFile) }}">
+                <link rel="stylesheet" href="{{ secure_asset('build/' . $cssFile) }}">
             @endif
             @if($jsFile)
-                <script type="module" src="{{ asset('build/' . $jsFile) }}" defer></script>
+                <script type="module" src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
             @endif
         @else
             {{-- Development: Use Vite dev server --}}
