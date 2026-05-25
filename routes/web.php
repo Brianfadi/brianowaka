@@ -12,40 +12,6 @@ use Illuminate\Support\Facades\Route;
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// One-time admin user creation route (remove after use)
-Route::get('/setup-admin-user', function() {
-    // Check if admin already exists
-    $adminEmail = 'admin@brianowaka.com';
-    
-    if (\App\Models\User::where('email', $adminEmail)->exists()) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Admin user already exists!',
-            'login_url' => route('login'),
-        ]);
-    }
-    
-    // Create admin user
-    $user = \App\Models\User::create([
-        'name' => 'Brian Owaka',
-        'email' => $adminEmail,
-        'password' => \Illuminate\Support\Facades\Hash::make('Admin@2026'),
-        'email_verified_at' => now(),
-    ]);
-    
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Admin user created successfully!',
-        'credentials' => [
-            'email' => $adminEmail,
-            'password' => 'Admin@2026',
-        ],
-        'login_url' => route('login'),
-        'warning' => '⚠️ IMPORTANT: Change this password after first login!',
-        'note' => '⚠️ DELETE this route from routes/web.php after creating the admin user for security!',
-    ]);
-});
-
 // Diagnostic route for checking assets in production
 Route::get('/debug-assets', function() {
     $manifestPath = public_path('build/manifest.json');
