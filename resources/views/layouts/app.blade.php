@@ -22,7 +22,23 @@
         </script>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @if(app()->environment('production') && file_exists(public_path('build/manifest.json')))
+            {{-- Production: Load pre-built assets directly --}}
+            @php
+                $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+                $cssFile = $manifest['resources/css/app.css']['file'] ?? null;
+                $jsFile = $manifest['resources/js/app.js']['file'] ?? null;
+            @endphp
+            @if($cssFile)
+                <link rel="stylesheet" href="{{ asset('build/' . $cssFile) }}">
+            @endif
+            @if($jsFile)
+                <script type="module" src="{{ asset('build/' . $jsFile) }}" defer></script>
+            @endif
+        @else
+            {{-- Development: Use Vite dev server --}}
+            @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @endif
         
         @stack('styles')
         
