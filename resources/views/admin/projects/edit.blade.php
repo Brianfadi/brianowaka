@@ -1,0 +1,237 @@
+@extends('layouts.admin')
+@section('page-title', 'Edit Project')
+@section('page-subtitle', $project->title)
+
+@section('content')
+
+<div class="mb-4 flex items-center justify-between">
+    <a href="{{ route('admin.projects.index') }}" class="text-sm text-gray-400 hover:text-white transition-colors">← Back to Projects</a>
+    <a href="{{ route('admin.projects.show', $project) }}"
+       class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+        </svg>
+        Preview
+    </a>
+</div>
+
+<form action="{{ route('admin.projects.update', $project) }}" method="POST">
+@csrf @method('PUT')
+
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+    {{-- ===== LEFT ===== --}}
+    <div class="xl:col-span-2 space-y-5">
+
+        {{-- Basic Info --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Basic Info</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Project Title *</label>
+                    <input type="text" name="title" id="title" value="{{ old('title', $project->title) }}" required
+                           class="form-input" oninput="generateSlug(this.value)">
+                    @error('title')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+                <div>
+                    <label class="form-label">Slug</label>
+                    <input type="text" name="slug" id="slug" value="{{ old('slug', $project->slug) }}"
+                           class="form-input font-mono text-xs text-gray-400">
+                </div>
+                <div>
+                    <label class="form-label">Category</label>
+                    <select name="category_id" class="form-input">
+                        <option value="">Select a category</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $project->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        {{-- Description --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Description</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Short Description</label>
+                    <input type="text" name="short_description" value="{{ old('short_description', $project->short_description) }}" maxlength="500"
+                           class="form-input" placeholder="One-line summary">
+                </div>
+                <div>
+                    <label class="form-label">Full Description *</label>
+                    <textarea name="description" rows="5" required class="form-input">{{ old('description', $project->description) }}</textarea>
+                    @error('description')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+            </div>
+        </div>
+
+        {{-- Project Details --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Project Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="form-label">Tech Stack <span class="text-gray-600">(one per line)</span></label>
+                    <textarea name="tech_stack" rows="5" class="form-input font-mono text-xs">{{ old('tech_stack', is_array($project->tech_stack) ? implode("\n", $project->tech_stack) : '') }}</textarea>
+                </div>
+                <div>
+                    <label class="form-label">Key Features <span class="text-gray-600">(one per line)</span></label>
+                    <textarea name="features" rows="5" class="form-input text-xs">{{ old('features', is_array($project->features) ? implode("\n", $project->features) : '') }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        {{-- Media --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Media</h2>
+
+            {{-- Current images preview --}}
+            @if($project->images && count($project->images) > 0)
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-4">
+                @foreach($project->images as $img)
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                    <img src="{{ $img }}" alt="" class="w-full h-full object-cover">
+                </div>
+                @endforeach
+            </div>
+            @endif
+
+            <div>
+                <label class="form-label">Image URLs <span class="text-gray-600">(one per line — replaces current)</span></label>
+                <textarea name="images" rows="4" class="form-input font-mono text-xs">{{ old('images', is_array($project->images) ? implode("\n", $project->images) : '') }}</textarea>
+            </div>
+        </div>
+
+        {{-- Links --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Demo & Links</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="form-label">Demo Link</label>
+                    <input type="url" name="demo_link" value="{{ old('demo_link', $project->demo_link) }}" class="form-input">
+                    @error('demo_link')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+                <div>
+                    <label class="form-label">GitHub Link</label>
+                    <input type="url" name="github_link" value="{{ old('github_link', $project->github_link) }}" class="form-input">
+                    @error('github_link')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{-- ===== RIGHT ===== --}}
+    <div class="space-y-5">
+
+        {{-- Status --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Status</h2>
+            <div class="space-y-2">
+                <label class="flex items-center gap-3 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-yellow-600 transition-colors">
+                    <input type="radio" name="status" value="draft"
+                           class="text-yellow-500 focus:ring-yellow-500 focus:ring-offset-gray-900"
+                           {{ old('status', $project->status) === 'draft' ? 'checked' : '' }}>
+                    <div>
+                        <p class="text-sm font-medium text-white">Draft</p>
+                        <p class="text-xs text-gray-500">Not visible on frontend</p>
+                    </div>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-green-600 transition-colors">
+                    <input type="radio" name="status" value="published"
+                           class="text-green-500 focus:ring-green-500 focus:ring-offset-gray-900"
+                           {{ old('status', $project->status) === 'published' ? 'checked' : '' }}>
+                    <div>
+                        <p class="text-sm font-medium text-white">Published</p>
+                        <p class="text-xs text-gray-500">Visible on portfolio page</p>
+                    </div>
+                </label>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-800 flex gap-2">
+                <button type="submit"
+                        class="flex-1 px-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                    Update Project
+                </button>
+            </div>
+        </div>
+
+        {{-- Pricing --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Pricing</h2>
+            <div class="space-y-3">
+                <div>
+                    <label class="form-label">Price (KES)</label>
+                    <input type="number" name="price" value="{{ old('price', $project->price) }}" step="0.01" min="0" class="form-input">
+                </div>
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" name="is_for_sale" value="1" {{ old('is_for_sale', $project->is_for_sale) ? 'checked' : '' }}
+                           class="w-4 h-4 rounded border-gray-600 bg-gray-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900">
+                    <span class="text-sm text-gray-300">Available for Sale</span>
+                </label>
+            </div>
+        </div>
+
+        {{-- Visibility --}}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Visibility</h2>
+            <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $project->is_featured) ? 'checked' : '' }}
+                       class="w-4 h-4 rounded border-gray-600 bg-gray-800 text-purple-600 focus:ring-purple-500 focus:ring-offset-gray-900">
+                <div>
+                    <p class="text-sm text-gray-300">Featured Project</p>
+                    <p class="text-xs text-gray-600">Highlighted on homepage</p>
+                </div>
+            </label>
+        </div>
+
+        {{-- Danger Zone --}}
+        <div class="bg-gray-900 border border-red-900/40 rounded-xl p-5">
+            <h2 class="text-xs font-semibold text-red-500/70 uppercase tracking-wider mb-3">Danger Zone</h2>
+            <p class="text-xs text-gray-600 mb-3">This action cannot be undone.</p>
+        </div>
+
+    </div>
+</div>
+
+</form>
+
+{{-- Delete form outside the update form --}}
+<form action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="-mt-1"
+      onsubmit="return confirm('Permanently delete \'{{ addslashes($project->title) }}\'?')">
+    @csrf @method('DELETE')
+    <div class="xl:grid xl:grid-cols-3 xl:gap-6">
+        <div class="xl:col-span-2"></div>
+        <div>
+            <div class="bg-gray-900 border border-red-900/40 rounded-b-xl px-5 pb-5 -mt-5 pt-0 border-t-0">
+                <button type="submit"
+                        class="w-full px-4 py-2.5 bg-red-900/40 hover:bg-red-900/70 text-red-400 text-sm font-medium rounded-lg transition-colors">
+                    Delete Project
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+.form-label { display: block; font-size: 0.75rem; font-weight: 500; color: #9ca3af; margin-bottom: 0.375rem; }
+.form-input { width: 100%; background: #1f2937; border: 1px solid #374151; color: #fff; border-radius: 0.5rem; padding: 0.625rem 0.75rem; font-size: 0.875rem; }
+.form-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 1px #3b82f6; }
+.form-error { margin-top: 0.25rem; font-size: 0.75rem; color: #f87171; }
+</style>
+
+<script>
+function generateSlug(title) {
+    const slug = title.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    document.getElementById('slug').value = slug;
+}
+</script>
+
+@endsection
