@@ -14,6 +14,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js 22
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
 
@@ -26,8 +32,11 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
-# Install PHP dependencies (no dev)
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+
+# Install Node dependencies and build assets
+RUN npm ci && npm run build && rm -rf node_modules
 
 # Set correct permissions
 RUN chmod -R 775 storage bootstrap/cache \
@@ -39,5 +48,5 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 # Expose port
 EXPOSE 8000
 
-# Entrypoint: run migrations then start nginx + php-fpm
+# At runtime: migrate, cache config/routes/views, then start services
 CMD ["/bin/sh", "-c", "php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
