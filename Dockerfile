@@ -49,4 +49,4 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 EXPOSE 8000
 
 # At runtime: migrate, cache config/routes/views, then start services
-CMD ["/bin/sh", "-c", "php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "php artisan migrate --force && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]

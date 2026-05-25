@@ -26,12 +26,14 @@ class Setting extends Model
     ];
 
     /**
-     * Load all settings into cache as a keyed collection.
+     * Load all settings into cache as a keyed array (plain data, not Eloquent objects).
      */
     protected static function allCached(): \Illuminate\Support\Collection
     {
         return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
-            return static::all()->keyBy('key');
+            return static::all()->keyBy('key')->map(function ($setting) {
+                return (object) $setting->toArray();
+            });
         });
     }
 
