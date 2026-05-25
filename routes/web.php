@@ -29,20 +29,7 @@ Route::post('/reviews/submit', [App\Http\Controllers\ReviewController::class, 's
 
 // CV Download
 Route::get('/cv/download', [AboutController::class, 'downloadCV'])->name('cv.download');
-Route::get('/download/cv', function () {
-    $url = \App\Models\Setting::get('cv_url');
-    if (!$url) abort(404);
-
-    $path = ltrim(str_replace(rtrim(config('app.url'), '/') . '/storage/', '', $url), '/');
-
-    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-        abort(404);
-    }
-
-    $name = 'CV-' . \Illuminate\Support\Str::slug(\App\Models\Setting::get('site_name', 'resume')) . '.' . pathinfo($path, PATHINFO_EXTENSION);
-
-    return \Illuminate\Support\Facades\Storage::disk('public')->download($path, $name);
-})->name('cv.download');
+Route::get('/download/cv', [AboutController::class, 'downloadCV']);
 
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
