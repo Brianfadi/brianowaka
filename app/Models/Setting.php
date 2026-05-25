@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
     use HasFactory;
+
+    const CACHE_KEY = 'app_settings_all';
+    const CACHE_TTL = 3600; // 1 hour
 
     protected $fillable = [
         'key',
@@ -21,10 +25,28 @@ class Setting extends Model
         'value' => 'string'
     ];
 
+    /**
+     * Load all settings into cache as a keyed collection.
+     */
+    protected static function allCached(): \Illuminate\Support\Collection
+    {
+        return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
+            return static::all()->keyBy('key');
+        });
+    }
+
+    /**
+     * Flush the settings cache (call after any set/update).
+     */
+    public static function flushCache(): void
+    {
+        Cache::forget(self::CACHE_KEY);
+    }
+
     public static function get(string $key, $default = null)
     {
-        $setting = static::where('key', $key)->first();
-        
+        $setting = static::allCached()->get($key);
+
         if (!$setting) {
             return $default;
         }
@@ -40,7 +62,7 @@ class Setting extends Model
 
     public static function set(string $key, $value, string $type = 'text', string $group = 'general')
     {
-        return static::updateOrCreate(
+        $result = static::updateOrCreate(
             ['key' => $key],
             [
                 'value' => is_array($value) ? json_encode($value) : $value,
@@ -48,6 +70,10 @@ class Setting extends Model
                 'group' => $group
             ]
         );
+
+        static::flushCache();
+
+        return $result;
     }
 
     public function scopeByGroup($query, string $group)
