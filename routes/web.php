@@ -59,7 +59,7 @@ Route::get('/debug-assets', function() {
         }, glob($buildPath . '/*'));
     }
     
-    return response()->json($data, 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    return response()->json($data, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
