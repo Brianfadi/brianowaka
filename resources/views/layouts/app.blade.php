@@ -24,6 +24,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+        @stack('styles')
+        
         <!-- Custom Dark Mode Styles -->
         <style>
             /* Enhanced Dark Mode with Rich Colors */

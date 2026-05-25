@@ -2549,7 +2549,7 @@
 </section>
 
 </div>
-@push('scripts')
+@push('styles')
 <style>
 /* ═══════════════════════════════════════════════════════════════════════
    HERO CARD ROTATION STYLES
@@ -3136,7 +3136,9 @@
     z-index: 1;
 }
 </style>
+@endpush
 
+@push('scripts')
 <script>
 // ═══════════════════════════════════════════════════════════════════════
 // SPECTACULAR MULTI-DIRECTIONAL ANIMATION SYSTEM
