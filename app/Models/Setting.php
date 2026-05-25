@@ -26,15 +26,32 @@ class Setting extends Model
     ];
 
     /**
-     * Load all settings into cache as a keyed array (plain data, not Eloquent objects).
+     * Load all settings into cache as a plain array keyed by setting key.
+     * Using arrays avoids any class deserialization issues across deploys.
      */
-    protected static function allCached(): \Illuminate\Support\Collection
+    protected static function allCached(): array
     {
-        return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
-            return static::all()->keyBy('key')->map(function ($setting) {
-                return (object) $setting->toArray();
-            });
+        $data = Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
+            return static::all()->mapWithKeys(function ($setting) {
+                return [$setting->key => [
+                    'value' => $setting->value,
+                    'type'  => $setting->type,
+                ]];
+            })->all(); // plain PHP array, no Eloquent/Collection serialization
         });
+
+        // If cache returned something that isn't an array (stale serialized object), bust it
+        if (!is_array($data)) {
+            Cache::forget(self::CACHE_KEY);
+            return static::all()->mapWithKeys(function ($setting) {
+                return [$setting->key => [
+                    'value' => $setting->value,
+                    'type'  => $setting->type,
+                ]];
+            })->all();
+        }
+
+        return $data;
     }
 
     /**
@@ -47,18 +64,21 @@ class Setting extends Model
 
     public static function get(string $key, $default = null)
     {
-        $setting = static::allCached()->get($key);
-
-        if (!$setting) {
+        $data = static::allCached();
+        
+        if (!isset($data[$key])) {
             return $default;
         }
 
-        return match($setting->type) {
-            'json' => json_decode($setting->value, true),
-            'boolean' => filter_var($setting->value, FILTER_VALIDATE_BOOLEAN),
-            'integer' => (int) $setting->value,
-            'float' => (float) $setting->value,
-            default => $setting->value
+        $value = $data[$key]['value'];
+        $type  = $data[$key]['type'] ?? 'text';
+
+        return match($type) {
+            'json'    => json_decode($value, true),
+            'boolean' => filter_var($value, FILTER_VALIDATE_BOOLEAN),
+            'integer' => (int) $value,
+            'float'   => (float) $value,
+            default   => $value,
         };
     }
 
