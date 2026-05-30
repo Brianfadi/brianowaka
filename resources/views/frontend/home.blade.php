@@ -2968,11 +2968,11 @@
 .animate-flip-in-x { animation: flipInX 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 .animate-elastic-in { animation: elasticIn 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
-/* SCROLL ANIMATIONS - Enhanced & Faster */
+/* SCROLL ANIMATIONS - Enhanced & Balanced Speed */
 .scroll-animate {
     opacity: 0;
     transform: translateY(50px) rotate(5deg) scale(0.8);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate.animate {
@@ -2983,7 +2983,7 @@
 .scroll-animate-left {
     opacity: 0;
     transform: translateX(-80px) rotate(-15deg) scale(0.7);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-left.animate {
@@ -2994,7 +2994,7 @@
 .scroll-animate-right {
     opacity: 0;
     transform: translateX(80px) rotate(15deg) scale(0.7);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-right.animate {
@@ -3005,7 +3005,7 @@
 .scroll-animate-scale {
     opacity: 0;
     transform: scale(0.3) rotate(180deg);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-scale.animate {
@@ -3016,7 +3016,7 @@
 .scroll-animate-flip {
     opacity: 0;
     transform: perspective(400px) rotateY(90deg) scale(0.5);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-flip.animate {
@@ -3024,10 +3024,10 @@
     transform: perspective(400px) rotateY(0deg) scale(1);
 }
 
-/* STAGGERED DELAYS - Faster */
-.delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; transition-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; transition-delay: 0.3s; }
+/* STAGGERED DELAYS - Balanced */
+.delay-100 { animation-delay: 0.15s; transition-delay: 0.15s; }
+.delay-200 { animation-delay: 0.3s; transition-delay: 0.3s; }
+.delay-300 { animation-delay: 0.45s; transition-delay: 0.45s; }
 .delay-400 { animation-delay: 1.2s; transition-delay: 1.2s; }
 .delay-500 { animation-delay: 1.5s; transition-delay: 1.5s; }
 .delay-600 { animation-delay: 1.8s; transition-delay: 1.8s; }
@@ -3244,7 +3244,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add animate class with enhanced effects
                     element.classList.add('animate');
                     
-                    // STAGGERED CHILDREN - Multi-directional (FASTER)
+                    // STAGGERED CHILDREN - Multi-directional (Balanced Speed)
                     const children = element.querySelectorAll('.stagger-child');
                     const childAnimations = [
                         'scroll-animate-left',
@@ -3258,16 +3258,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         child.classList.add(animationClass);
                         setTimeout(() => {
                             child.classList.add('animate');
-                        }, index * 100);
+                        }, index * 150);
                     });
                     
-                    // PROJECT CARDS - Spectacular entries (FASTER)
+                    // PROJECT CARDS - Spectacular entries (Balanced Speed)
                     const projectCards = element.querySelectorAll('.project-card');
                     const projectAnimations = [
                         { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 0 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 100 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 200 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 300 }
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 150 },
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 300 },
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 450 }
                     ];
                     
                     projectCards.forEach((card, index) => {
@@ -3279,14 +3279,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, animation.delay);
                     });
                     
-                    // SERVICE CARDS - Rotating entries (FASTER)
+                    // SERVICE CARDS - Rotating entries (Balanced Speed)
                     const serviceCards = element.querySelectorAll('.service-card');
                     serviceCards.forEach((card, index) => {
                         setTimeout(() => {
                             card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
                             card.style.opacity = '1';
                             card.classList.add('hover-dance'); // Add hover dance
-                        }, index * 120);
+                        }, index * 180);
                     });
                     
                     // SKILL BARS - Animated progress with rotation (FASTER)
