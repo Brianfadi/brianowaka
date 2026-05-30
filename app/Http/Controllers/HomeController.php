@@ -112,14 +112,20 @@ class HomeController extends Controller
             return null;
         }
 
-        $disk = config('filesystems.default');
-        
-        // For S3, Storage::url() returns the full URL
-        if ($disk === 's3') {
-            return Storage::disk('s3')->url($path);
+        try {
+            $disk = config('filesystems.default');
+            
+            // For S3, Storage::url() returns the full URL
+            if ($disk === 's3') {
+                return Storage::disk('s3')->url($path);
+            }
+            
+            // For local/public disk, use the standard URL helper
+            return Storage::url($path);
+        } catch (\Exception $e) {
+            // If there's an error getting the URL, return null
+            \Log::error('Error getting file URL: ' . $e->getMessage());
+            return null;
         }
-        
-        // For local/public disk, use the standard URL helper
-        return Storage::url($path);
     }
 }

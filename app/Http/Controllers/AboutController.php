@@ -78,7 +78,11 @@ class AboutController extends Controller
         ];
         
         // Decode achievements JSON
-        $achievements = json_decode($settings['achievements'], true) ?? [];
+        try {
+            $achievements = json_decode($settings['achievements'], true) ?? [];
+        } catch (\Exception $e) {
+            $achievements = [];
+        }
         
         return view('frontend.about', compact(
             'skills', 
