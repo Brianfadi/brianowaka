@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     nginx \
     procps \
+    gettext-base \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -43,8 +44,8 @@ RUN chmod -R 775 storage bootstrap/cache \
     && chmod -R 775 public/storage \
     && chown -R www-data:www-data public/storage
 
-# Copy nginx config and set up properly
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx config template
+COPY docker/nginx-template.conf /etc/nginx/nginx-template.conf
 RUN rm -f /etc/nginx/sites-enabled/default
 
 # Copy and set up startup script
@@ -56,10 +57,13 @@ COPY railway-start.sh /usr/local/bin/railway-start.sh
 RUN chmod +x /usr/local/bin/railway-start.sh
 
 # Expose port
-EXPOSE 8000
+EXPOSE ${PORT:-8000}
 
-# Use simple inline startup - no external script
-CMD php artisan storage:link 2>&1 || true && \
+# Use simple inline startup with PORT substitution
+CMD export PORT=${PORT:-8000} && \
+    envsubst '${PORT}' < /etc/nginx/nginx-template.conf > /etc/nginx/conf.d/default.conf && \
+    echo "Nginx will listen on port $PORT" && \
+    php artisan storage:link 2>&1 || true && \
     echo "Running migrations..." && \
     php artisan migrate --force 2>&1 && \
     echo "Caching..." && \
@@ -73,5 +77,5 @@ CMD php artisan storage:link 2>&1 || true && \
     ps aux | grep php-fpm | grep -v grep && \
     echo "Starting Nginx..." && \
     nginx -t && \
-    echo "=== Services Started ===" && \
+    echo "=== Services Started on port $PORT ===" && \
     exec nginx -g 'daemon off;'
