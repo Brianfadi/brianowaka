@@ -56,11 +56,11 @@ RUN chmod +x /usr/local/bin/start.sh
 COPY railway-start.sh /usr/local/bin/railway-start.sh
 RUN chmod +x /usr/local/bin/railway-start.sh
 
-# Expose port
-EXPOSE ${PORT:-8000}
+# Expose port (Railway will map this)
+EXPOSE 8080
 
 # Use simple inline startup with PORT substitution
-CMD export PORT=${PORT:-8000} && \
+CMD export PORT=${PORT:-8080} && \
     envsubst '${PORT}' < /etc/nginx/nginx-template.conf > /etc/nginx/conf.d/default.conf && \
     echo "Nginx will listen on port $PORT" && \
     php artisan storage:link 2>&1 || true && \
