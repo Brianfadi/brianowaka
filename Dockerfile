@@ -1,5 +1,8 @@
 FROM php:8.4-fpm
 
+# Force cache invalidation - updated 2026-05-30
+ARG CACHEBUST=1
+
 # Install system dependencies (updated: added procps for process management)
 RUN apt-get update && apt-get install -y \
     git \
