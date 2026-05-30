@@ -1,0 +1,54 @@
+# Railway Ignore File
+# Files and directories to exclude from Railway deployments
+
+# Development files
+.env
+.env.local
+.env.*.local
+
+# Documentation
+*.md
+!README.md
+
+# Tests
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Node modules (if using npm/yarn for frontend)
+node_modules/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Laravel specific
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+!storage/logs/.gitignore
+!storage/framework/.gitignore
+!storage/framework/cache/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/views/.gitignore
+
+# Build artifacts (keep public/build for Vite assets)
+# public/build/*
+
+# Temporary files
+*.log
+*.tmp
+*.cache

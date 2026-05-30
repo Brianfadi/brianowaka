@@ -42,8 +42,12 @@ RUN chmod -R 775 storage bootstrap/cache \
 # Copy nginx config
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 
+# Copy startup script
+COPY railway-start.sh /usr/local/bin/railway-start.sh
+RUN chmod +x /usr/local/bin/railway-start.sh
+
 # Expose port
 EXPOSE 8000
 
-# At runtime: create storage link, migrate, cache config/routes/views, then start services
-CMD ["/bin/sh", "-c", "php artisan storage:link && php artisan migrate --force && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
+# At runtime: create storage link (ignore if exists), migrate, cache config/routes/views, then start services
+CMD ["/bin/sh", "-c", "php artisan storage:link || true && php artisan migrate --force && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm -D && nginx -g 'daemon off;'"]
