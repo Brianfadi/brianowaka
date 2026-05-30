@@ -558,7 +558,9 @@
     <a href="https://wa.me/{{ $whatsappPhone }}?text={{ urlencode($defaultMessage) }}" 
        target="_blank" 
        rel="noopener noreferrer"
-       class="fixed bottom-6 right-6 z-50 group"
+       id="whatsapp-float-btn"
+       class="fixed bottom-6 right-6 group"
+       style="z-index: 9999 !important;"
        aria-label="Chat on WhatsApp">
         <div class="relative">
             <!-- Pulsing ring animation -->
@@ -593,11 +595,30 @@
 
     <!-- WhatsApp Button Styles -->
     <style>
-        /* Ensure button stays above other elements */
+        /* Ensure button stays above ALL other elements on all screen sizes */
+        #whatsapp-float-btn {
+            position: fixed !important;
+            bottom: 1.5rem !important;
+            right: 1.5rem !important;
+            z-index: 9999 !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Mobile adjustments */
         @media (max-width: 640px) {
-            .fixed.bottom-6.right-6 {
-                bottom: 1.5rem;
-                right: 1rem;
+            #whatsapp-float-btn {
+                bottom: 1rem !important;
+                right: 1rem !important;
+            }
+        }
+        
+        /* Desktop - ensure it's always visible */
+        @media (min-width: 641px) {
+            #whatsapp-float-btn {
+                bottom: 1.5rem !important;
+                right: 1.5rem !important;
             }
         }
         
@@ -614,7 +635,7 @@
         }
         
         /* Custom pulse animation for the ring */
-        .animate-ping {
+        #whatsapp-float-btn .animate-ping {
             animation: whatsapp-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
     </style>
