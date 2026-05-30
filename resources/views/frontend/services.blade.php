@@ -1,96 +1,134 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gray-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 py-4">
+<div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 py-12">
     <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-16">
         
-        {{-- Services Header and Grid Card --}}
-        <div class="bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm rounded-3xl shadow-2xl dark:shadow-indigo-900/30 border border-gray-200 dark:border-indigo-500/20 overflow-hidden transition-colors duration-300 animate-slide-in-up">
-            
-            {{-- Header --}}
-            <div class="p-6 lg:p-8 border-b border-gray-200 dark:border-indigo-500/20 text-center">
-                <p class="text-sm font-semibold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-3">What I Offer</p>
-                <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-slate-100 mb-4">Services</h1>
-                <p class="text-lg text-gray-600 dark:text-slate-400 max-w-2xl mx-auto">
-                    Professional web development and digital solutions tailored to your business needs.
-                </p>
+        {{-- Hero Header Section --}}
+        <div class="text-center mb-16 animate-fade-in">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <span class="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">What I Offer</span>
             </div>
+            <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Professional Services
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                Transform your ideas into powerful digital solutions with cutting-edge technology and expert craftsmanship
+            </p>
+        </div>
 
-            {{-- Services Grid --}}
-            <div class="p-6 lg:p-8">
+        {{-- Services Grid --}}
+        <div class="mb-20">
+        <div class="mb-20">
                 @if($services->count() > 0)
-                <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    @foreach($services as $service)
+                <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    @foreach($services as $index => $service)
                     @php
                         $features = is_string($service->features)
                             ? (json_decode($service->features, true) ?? [])
                             : ($service->features ?? []);
+                        
+                        // Gradient colors for each card
+                        $gradients = [
+                            ['from-blue-500', 'to-cyan-500', 'shadow-blue-500/20'],
+                            ['from-purple-500', 'to-pink-500', 'shadow-purple-500/20'],
+                            ['from-orange-500', 'to-red-500', 'shadow-orange-500/20'],
+                            ['from-green-500', 'to-emerald-500', 'shadow-green-500/20'],
+                            ['from-indigo-500', 'to-purple-500', 'shadow-indigo-500/20'],
+                            ['from-pink-500', 'to-rose-500', 'shadow-pink-500/20'],
+                        ];
+                        $gradient = $gradients[$index % count($gradients)];
                     @endphp
-                    <div class="group relative bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl p-7 hover:border-blue-300 hover:shadow-xl dark:shadow-indigo-900/50 transition-shadow duration-300 transition-all duration-300 flex flex-col overflow-hidden">
-
+                    <div class="group relative bg-white dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-gray-200 dark:border-slate-700 hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 {{ $gradient[2] }} animate-slide-in-up" style="animation-delay: {{ $index * 0.1 }}s">
+                        
+                        {{-- Gradient overlay on hover --}}
+                        <div class="absolute inset-0 bg-gradient-to-br {{ $gradient[0] }} {{ $gradient[1] }} opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                        
                         {{-- Popular badge --}}
                         @if($service->order <= 2)
-                        <div class="absolute top-4 right-4 px-2.5 py-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-yellow-900 text-xs font-bold rounded-full">
-                            Popular
+                        <div class="absolute top-6 right-6 z-10">
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full shadow-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-900" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                                <span class="text-xs font-bold text-yellow-900">Popular</span>
+                            </div>
                         </div>
                         @endif
 
-                        {{-- Icon --}}
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-md shadow-blue-500/20">
-                            @if($service->icon)
-                            <i class="{{ $service->icon }} text-white text-2xl"></i>
-                            @else
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                            @endif
-                        </div>
-
-                        {{-- Title & description --}}
-                        <h3 class="text-xl font-extrabold text-gray-900 dark:text-slate-100 transition-colors duration-300 mb-2 group-hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 dark:text-blue-400 transition-colors duration-300 transition-colors">{{ $service->title }}</h3>
-                        <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300 text-sm leading-relaxed mb-5">{{ $service->description }}</p>
-
-                        {{-- Features --}}
-                        @if(!empty($features))
-                        <ul class="space-y-2 mb-6 flex-1">
-                            @foreach(array_slice($features, 0, 5) as $feature)
-                            <li class="flex items-start gap-2.5 text-sm text-gray-600 dark:text-slate-400 transition-colors duration-300">
-                                <span class="mt-0.5 w-4 h-4 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-2.5 h-2.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                </span>
-                                {{ $feature }}
-                            </li>
-                            @endforeach
-                            @if(count($features) > 5)
-                            <li class="text-xs text-gray-400 pl-6">+{{ count($features) - 5 }} more</li>
-                            @endif
-                        </ul>
-                        @else
-                        <div class="flex-1"></div>
-                        @endif
-
-                        {{-- Price + CTA --}}
-                        <div class="pt-5 border-t border-gray-100 mt-auto">
-                            <div class="flex items-end justify-between mb-4">
-                                <div>
-                                    <div class="text-xl font-extrabold text-blue-600 dark:text-blue-400 transition-colors duration-300">{{ $service->formatted_price }}</div>
-                                    <div class="text-xs text-gray-400 mt-0.5">
-                                        @if($service->pricing_type === 'custom') Tailored to your scope
-                                        @elseif($service->pricing_type === 'from') Starting price
-                                        @else Fixed price
+                        <div class="relative p-8">
+                            {{-- Icon with gradient background --}}
+                            <div class="mb-6">
+                                <div class="relative inline-flex">
+                                    <div class="absolute inset-0 bg-gradient-to-br {{ $gradient[0] }} {{ $gradient[1] }} rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
+                                    <div class="relative w-16 h-16 rounded-2xl bg-gradient-to-br {{ $gradient[0] }} {{ $gradient[1] }} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                                        @if($service->icon)
+                                        <i class="{{ $service->icon }} text-white text-2xl"></i>
+                                        @else
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                        </svg>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('contact') }}?service={{ urlencode($service->title) }}"
-                               class="w-full flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-md shadow-blue-500/20 text-sm">
-                                Request Quote
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </a>
+
+                            {{-- Title & description --}}
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:{{ $gradient[0] }} group-hover:{{ $gradient[1] }} group-hover:bg-clip-text transition-all duration-300">
+                                {{ $service->title }}
+                            </h3>
+                            <p class="text-gray-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                                {{ $service->description }}
+                            </p>
+
+                            {{-- Features --}}
+                            @if(!empty($features))
+                            <ul class="space-y-3 mb-8">
+                                @foreach(array_slice($features, 0, 5) as $feature)
+                                <li class="flex items-start gap-3 text-sm text-gray-700 dark:text-slate-300">
+                                    <div class="mt-0.5 w-5 h-5 rounded-full bg-gradient-to-br {{ $gradient[0] }} {{ $gradient[1] }} flex items-center justify-center flex-shrink-0 shadow-sm">
+                                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <span class="flex-1">{{ $feature }}</span>
+                                </li>
+                                @endforeach
+                                @if(count($features) > 5)
+                                <li class="text-xs text-gray-500 dark:text-slate-500 pl-8 italic">
+                                    +{{ count($features) - 5 }} more features included
+                                </li>
+                                @endif
+                            </ul>
+                            @endif
+
+                            {{-- Price + CTA --}}
+                            <div class="pt-6 border-t border-gray-100 dark:border-slate-700">
+                                <div class="flex items-center justify-between mb-5">
+                                    <div>
+                                        <div class="text-3xl font-bold bg-gradient-to-r {{ $gradient[0] }} {{ $gradient[1] }} bg-clip-text text-transparent">
+                                            {{ $service->formatted_price }}
+                                        </div>
+                                        <div class="text-xs text-gray-500 dark:text-slate-500 mt-1">
+                                            @if($service->pricing_type === 'custom') Custom pricing
+                                            @elseif($service->pricing_type === 'from') Starting from
+                                            @else Fixed rate
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('contact') }}?service={{ urlencode($service->title) }}"
+                                   class="group/btn relative w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r {{ $gradient[0] }} {{ $gradient[1] }} text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
+                                    <span class="relative z-10">Request Quote</span>
+                                    <svg class="relative z-10 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                    <div class="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity"></div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @endforeach
@@ -98,70 +136,140 @@
 
                 @else
                 {{-- Empty state --}}
-                <div class="text-center py-24">
-                    <div class="w-20 h-20 bg-gray-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="text-center py-32 bg-white dark:bg-slate-800/50 rounded-3xl border border-gray-200 dark:border-slate-700">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl shadow-blue-500/20 animate-float">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-slate-100 transition-colors duration-300 mb-2">Services coming soon</h3>
-                    <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300 mb-8">I'm updating my offerings. Reach out in the meantime.</p>
+                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Services Coming Soon</h3>
+                    <p class="text-gray-600 dark:text-slate-400 mb-10 max-w-md mx-auto">
+                        I'm currently updating my service offerings. Feel free to reach out to discuss your project needs.
+                    </p>
                     <a href="{{ route('contact') }}"
-                       class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors">
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
                         Contact Me
                     </a>
                 </div>
                 @endif
             </div>
-        </div>
 
         {{-- ── PRICING TIERS ─────────────────────────────────────────────────── --}}
-        <div class="bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm rounded-3xl shadow-2xl dark:shadow-indigo-900/30 border border-gray-200 dark:border-indigo-500/20 overflow-hidden transition-colors duration-300 p-6 lg:p-8 mt-4">
-            <div class="mb-12">
-                <p class="text-sm font-semibold tracking-widest text-blue-600 dark:text-blue-400 transition-colors duration-300 uppercase mb-2">Investment</p>
-                <h2 class="text-4xl font-extrabold text-gray-900 dark:text-slate-100 transition-colors duration-300">Pricing That Fits Your Needs</h2>
-                <div class="mt-3 w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-                <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300 mt-4 max-w-xl">Pricing depends on your project scope. These are rough ranges — get a custom quote for your specific needs.</p>
+        <div class="mb-20">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full mb-6">
+                    <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Investment</span>
+                </div>
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
+                    Flexible Pricing Plans
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-slate-300 max-w-2xl mx-auto">
+                    Choose a plan that fits your project scope and budget. All plans include ongoing support and maintenance.
+                </p>
             </div>
 
             @if($pricingTiers->count() > 0)
-            <div class="grid md:grid-cols-{{ min($pricingTiers->count(), 3) }} gap-5">
-                @foreach($pricingTiers as $tier)
-                <div class="relative bg-{{ $tier->is_featured ? 'gradient-to-br from-blue-600 to-purple-700' : 'gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300' }} border-2 {{ $tier->is_featured ? 'border-blue-600 shadow-xl dark:shadow-indigo-900/50 transition-shadow duration-300 shadow-blue-500/15' : 'border-gray-200 dark:border-indigo-500/20 transition-colors duration-300' }} rounded-2xl p-8">
+            <div class="grid md:grid-cols-{{ min($pricingTiers->count(), 3) }} gap-8">
+                @foreach($pricingTiers as $index => $tier)
+                <div class="relative group {{ $tier->is_featured ? 'md:-mt-4 md:mb-4' : '' }}">
+                    {{-- Featured badge --}}
                     @if($tier->is_featured)
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">Most Popular</div>
+                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+                        <div class="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 rounded-full shadow-xl">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <span class="text-sm font-bold text-white">Most Popular</span>
+                        </div>
+                    </div>
                     @endif
-                    <h3 class="text-lg font-extrabold mb-1 {{ $tier->is_featured ? 'text-white' : 'text-gray-900 dark:text-slate-100 transition-colors duration-300' }}">{{ $tier->name }}</h3>
-                    <div class="text-3xl font-extrabold mb-2 {{ $tier->is_featured ? 'text-white' : 'text-blue-600 dark:text-blue-400 transition-colors duration-300' }}">{{ $tier->price }}</div>
-                    <p class="text-sm {{ $tier->is_featured ? 'text-blue-100' : 'text-gray-500 dark:text-slate-400 transition-colors duration-300' }} mb-6">{{ $tier->description }}</p>
-                    <a href="{{ route('contact') }}"
-                       class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02]
-                              {{ $tier->is_featured ? 'bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300 text-blue-700 hover:bg-blue-50 dark:bg-blue-900/50 transition-colors duration-300' : 'bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 dark:border-indigo-500/20 transition-colors duration-300 text-gray-700 dark:text-slate-300 transition-colors duration-300 hover:border-blue-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 dark:text-blue-400 transition-colors duration-300' }}">
-                        Get a Quote
-                    </a>
+
+                    <div class="relative h-full bg-white dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl overflow-hidden border-2 {{ $tier->is_featured ? 'border-purple-500 dark:border-purple-400 shadow-2xl shadow-purple-500/20' : 'border-gray-200 dark:border-slate-700' }} hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 p-8">
+                        
+                        {{-- Gradient overlay --}}
+                        @if($tier->is_featured)
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5"></div>
+                        @endif
+
+                        <div class="relative">
+                            {{-- Plan name --}}
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                {{ $tier->name }}
+                            </h3>
+                            
+                            {{-- Price --}}
+                            <div class="mb-4">
+                                <div class="text-5xl font-extrabold bg-gradient-to-r {{ $tier->is_featured ? 'from-purple-600 to-pink-600' : 'from-blue-600 to-cyan-600' }} bg-clip-text text-transparent">
+                                    {{ $tier->price }}
+                                </div>
+                            </div>
+                            
+                            {{-- Description --}}
+                            <p class="text-gray-600 dark:text-slate-400 mb-8 leading-relaxed">
+                                {{ $tier->description }}
+                            </p>
+                            
+                            {{-- CTA Button --}}
+                            <a href="{{ route('contact') }}"
+                               class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 {{ $tier->is_featured ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-xl' : 'bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-slate-600' }}">
+                                Get Started
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 @endforeach
             </div>
             @else
             {{-- Default pricing tiers if none are configured --}}
-            <div class="grid md:grid-cols-3 gap-5">
+            <div class="grid md:grid-cols-3 gap-8">
                 @foreach([
-                    ['Basic','KES 25K – 50K','UI/UX Design, Graphics, Small APIs','from-blue-50','border-blue-100','text-blue-600 dark:text-blue-400 transition-colors duration-300',false],
-                    ['Standard','KES 50K – 100K','Web Apps, E-commerce, REST APIs','from-blue-600','border-blue-600','text-white',true],
-                    ['Enterprise','KES 100K+','Business Systems, Complex Solutions','from-gray-50','border-gray-200 dark:border-indigo-500/20 transition-colors duration-300','text-blue-600',false],
-                ] as [$tier,$price,$desc,$bg,$border,$priceColor,$featured])
-                <div class="relative bg-{{ $bg }} border-2 {{ $featured ? 'border-blue-600 shadow-xl dark:shadow-indigo-900/50 transition-shadow duration-300 shadow-blue-500/15' : 'border-'.$border }} rounded-2xl p-8 {{ $featured ? 'bg-gradient-to-br from-blue-600 to-purple-700 text-white' : '' }}">
+                    ['Basic','KES 25K – 50K','Perfect for small projects, UI/UX design, graphics, and simple APIs',false,'from-blue-500','to-cyan-500'],
+                    ['Standard','KES 50K – 100K','Ideal for web apps, e-commerce platforms, and REST API development',true,'from-purple-500','to-pink-500'],
+                    ['Enterprise','KES 100K+','Complete business systems, complex integrations, and custom solutions',false,'from-orange-500','to-red-500'],
+                ] as [$tier,$price,$desc,$featured,$from,$to])
+                <div class="relative group {{ $featured ? 'md:-mt-4 md:mb-4' : '' }}">
                     @if($featured)
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">Most Popular</div>
+                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+                        <div class="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 rounded-full shadow-xl">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <span class="text-sm font-bold text-white">Most Popular</span>
+                        </div>
+                    </div>
                     @endif
-                    <h3 class="text-lg font-extrabold mb-1 {{ $featured ? 'text-white' : 'text-gray-900 dark:text-slate-100 transition-colors duration-300' }}">{{ $tier }}</h3>
-                    <div class="text-3xl font-extrabold mb-2 {{ $featured ? 'text-white' : 'text-blue-600 dark:text-blue-400 transition-colors duration-300' }}">{{ $price }}</div>
-                    <p class="text-sm {{ $featured ? 'text-blue-100' : 'text-gray-500 dark:text-slate-400 transition-colors duration-300' }} mb-6">{{ $desc }}</p>
-                    <a href="{{ route('contact') }}"
-                       class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02]
-                              {{ $featured ? 'bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300 text-blue-700 hover:bg-blue-50 dark:bg-blue-900/50 transition-colors duration-300' : 'bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 dark:border-indigo-500/20 transition-colors duration-300 text-gray-700 dark:text-slate-300 transition-colors duration-300 hover:border-blue-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 dark:text-blue-400 transition-colors duration-300' }}">
-                        Get a Quote
-                    </a>
+
+                    <div class="relative h-full bg-white dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl overflow-hidden border-2 {{ $featured ? 'border-purple-500 dark:border-purple-400 shadow-2xl shadow-purple-500/20' : 'border-gray-200 dark:border-slate-700' }} hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 p-8">
+                        @if($featured)
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5"></div>
+                        @endif
+
+                        <div class="relative">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ $tier }}</h3>
+                            <div class="mb-4">
+                                <div class="text-5xl font-extrabold bg-gradient-to-r {{ $from }} {{ $to }} bg-clip-text text-transparent">
+                                    {{ $price }}
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-slate-400 mb-8 leading-relaxed">{{ $desc }}</p>
+                            <a href="{{ route('contact') }}"
+                               class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 {{ $featured ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-xl' : 'bg-gray-100 dark:bg-slate-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-slate-600' }}">
+                                Get Started
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 @endforeach
             </div>
