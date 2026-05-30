@@ -66,6 +66,8 @@ CMD export PORT=${PORT:-8080} && \
     php artisan storage:link 2>&1 || true && \
     echo "Running migrations..." && \
     php artisan migrate --force 2>&1 && \
+    echo "Seeding database..." && \
+    php artisan db:seed --force 2>&1 || true && \
     echo "Caching..." && \
     php artisan config:cache 2>&1 && \
     php artisan route:cache 2>&1 && \
