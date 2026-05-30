@@ -15,13 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user if it doesn't exist
+        // Create admin user directly without factory
         if (!\App\Models\User::where('email', 'admin@brianowaka.com')->exists()) {
-            User::factory()->create([
+            \App\Models\User::create([
                 'name' => 'Admin',
                 'email' => 'admin@brianowaka.com',
-                'password' => bcrypt('Admin@2026'),
+                'password' => \Illuminate\Support\Facades\Hash::make('Admin@2026'),
+                'email_verified_at' => now(),
             ]);
+            
+            $this->command->info('✓ Admin user created successfully!');
+        } else {
+            $this->command->info('✓ Admin user already exists.');
         }
     }
 }
