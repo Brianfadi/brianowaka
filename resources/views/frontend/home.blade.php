@@ -2952,27 +2952,27 @@
     }
 }
 
-/* ANIMATION CLASSES - SLOWER & SMOOTHER */
-.animate-drop-from-top { animation: dropFromTop 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-rocket-from-bottom { animation: rocketFromBottom 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-spin-from-left { animation: spinFromLeft 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-whirl-from-right { animation: whirlFromRight 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-explosive-center { animation: explosiveCenter 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-diagonal-top-left { animation: diagonalTopLeft 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-diagonal-top-right { animation: diagonalTopRight 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-diagonal-bottom-left { animation: diagonalBottomLeft 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-diagonal-bottom-right { animation: diagonalBottomRight 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-spiral-in { animation: spiralIn 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-mega-bounce { animation: megaBounce 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-flip-in { animation: flipIn 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-flip-in-x { animation: flipInX 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-.animate-elastic-in { animation: elasticIn 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+/* ANIMATION CLASSES - FASTER & SMOOTHER */
+.animate-drop-from-top { animation: dropFromTop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-rocket-from-bottom { animation: rocketFromBottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-spin-from-left { animation: spinFromLeft 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-whirl-from-right { animation: whirlFromRight 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-explosive-center { animation: explosiveCenter 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-diagonal-top-left { animation: diagonalTopLeft 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-diagonal-top-right { animation: diagonalTopRight 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-diagonal-bottom-left { animation: diagonalBottomLeft 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-diagonal-bottom-right { animation: diagonalBottomRight 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-spiral-in { animation: spiralIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-mega-bounce { animation: megaBounce 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-flip-in { animation: flipIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-flip-in-x { animation: flipInX 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-elastic-in { animation: elasticIn 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
-/* SCROLL ANIMATIONS - Enhanced & Slower */
+/* SCROLL ANIMATIONS - Enhanced & Faster */
 .scroll-animate {
     opacity: 0;
     transform: translateY(50px) rotate(5deg) scale(0.8);
-    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate.animate {
@@ -2983,7 +2983,7 @@
 .scroll-animate-left {
     opacity: 0;
     transform: translateX(-80px) rotate(-15deg) scale(0.7);
-    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-left.animate {
@@ -2994,7 +2994,7 @@
 .scroll-animate-right {
     opacity: 0;
     transform: translateX(80px) rotate(15deg) scale(0.7);
-    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-right.animate {
@@ -3005,7 +3005,7 @@
 .scroll-animate-scale {
     opacity: 0;
     transform: scale(0.3) rotate(180deg);
-    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-scale.animate {
@@ -3016,7 +3016,7 @@
 .scroll-animate-flip {
     opacity: 0;
     transform: perspective(400px) rotateY(90deg) scale(0.5);
-    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scroll-animate-flip.animate {
@@ -3024,10 +3024,10 @@
     transform: perspective(400px) rotateY(0deg) scale(1);
 }
 
-/* STAGGERED DELAYS - Extended & Slower */
-.delay-100 { animation-delay: 0.3s; transition-delay: 0.3s; }
-.delay-200 { animation-delay: 0.6s; transition-delay: 0.6s; }
-.delay-300 { animation-delay: 0.9s; transition-delay: 0.9s; }
+/* STAGGERED DELAYS - Faster */
+.delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; transition-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; transition-delay: 0.3s; }
 .delay-400 { animation-delay: 1.2s; transition-delay: 1.2s; }
 .delay-500 { animation-delay: 1.5s; transition-delay: 1.5s; }
 .delay-600 { animation-delay: 1.8s; transition-delay: 1.8s; }
@@ -3151,34 +3151,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mark page as loaded
         document.body.classList.add('page-loaded');
         
-        // HERO SECTION - Multi-directional spectacular entries (SLOWER)
+        // HERO SECTION - Multi-directional spectacular entries (FASTER)
         const heroAnimations = [
             // Profile comes from top with dramatic drop
-            { selector: '.hero-profile', animation: 'animate-drop-from-top', delay: 300 },
+            { selector: '.hero-profile', animation: 'animate-drop-from-top', delay: 100 },
             
             // Dashboard spins in from left
-            { selector: '.hero-dashboard', animation: 'animate-spin-from-left', delay: 800 },
+            { selector: '.hero-dashboard', animation: 'animate-spin-from-left', delay: 250 },
             
             // Status pill rockets from bottom
-            { selector: '.hero-status', animation: 'animate-rocket-from-bottom', delay: 1300 },
+            { selector: '.hero-status', animation: 'animate-rocket-from-bottom', delay: 400 },
             
             // Main headline explodes from center
-            { selector: '.hero-headline', animation: 'animate-explosive-center', delay: 1800 },
+            { selector: '.hero-headline', animation: 'animate-explosive-center', delay: 550 },
             
             // Marquee whirls from right
-            { selector: '.hero-marquee', animation: 'animate-whirl-from-right', delay: 2300 },
+            { selector: '.hero-marquee', animation: 'animate-whirl-from-right', delay: 700 },
             
             // Subtext flips in
-            { selector: '.hero-subtext', animation: 'animate-flip-in', delay: 2800 },
+            { selector: '.hero-subtext', animation: 'animate-flip-in', delay: 850 },
             
             // Buttons mega bounce
-            { selector: '.hero-buttons', animation: 'animate-mega-bounce', delay: 3300 },
+            { selector: '.hero-buttons', animation: 'animate-mega-bounce', delay: 1000 },
             
             // Tech pills spiral in
-            { selector: '.hero-tech-pills', animation: 'animate-spiral-in', delay: 3800 },
+            { selector: '.hero-tech-pills', animation: 'animate-spiral-in', delay: 1150 },
             
             // Social links elastic bounce
-            { selector: '.hero-social', animation: 'animate-elastic-in', delay: 4300 }
+            { selector: '.hero-social', animation: 'animate-elastic-in', delay: 1300 }
         ];
         
         heroAnimations.forEach(({ selector, animation, delay }) => {
@@ -3189,7 +3189,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // TECH PILLS - Individual diagonal entries (SLOWER)
+        // TECH PILLS - Individual diagonal entries (FASTER)
         const techPills = document.querySelectorAll('.hero-tech-pills span');
         const diagonalAnimations = [
             'animate-diagonal-top-left',
@@ -3200,12 +3200,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         techPills.forEach((pill, index) => {
             const animationClass = diagonalAnimations[index % diagonalAnimations.length];
-            pill.style.animationDelay = `${3800 + (index * 400)}ms`;
+            pill.style.animationDelay = `${1150 + (index * 100)}ms`;
             pill.classList.add(animationClass);
             pill.classList.add('hover-dance'); // Add hover effect
         });
         
-        // SOCIAL LINKS - Different spectacular entries (SLOWER)
+        // SOCIAL LINKS - Different spectacular entries (FASTER)
         const socialLinks = document.querySelectorAll('.hero-social a');
         const socialAnimations = [
             'animate-flip-in',
@@ -3216,15 +3216,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         socialLinks.forEach((link, index) => {
             const animationClass = socialAnimations[index % socialAnimations.length];
-            link.style.animationDelay = `${4300 + (index * 500)}ms`;
+            link.style.animationDelay = `${1300 + (index * 120)}ms`;
             link.classList.add(animationClass);
             link.classList.add('hover-spin'); // Add hover effect
         });
         
-        // DASHBOARD STATS - Staggered bounces (SLOWER)
+        // DASHBOARD STATS - Staggered bounces (FASTER)
         const dashboardStats = document.querySelectorAll('.hero-dashboard .stagger-child');
         dashboardStats.forEach((stat, index) => {
-            stat.style.animationDelay = `${1000 + (index * 300)}ms`;
+            stat.style.animationDelay = `${300 + (index * 100)}ms`;
             stat.classList.add('animate-mega-bounce');
         });
     }
@@ -3244,7 +3244,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add animate class with enhanced effects
                     element.classList.add('animate');
                     
-                    // STAGGERED CHILDREN - Multi-directional (SLOWER)
+                    // STAGGERED CHILDREN - Multi-directional (FASTER)
                     const children = element.querySelectorAll('.stagger-child');
                     const childAnimations = [
                         'scroll-animate-left',
@@ -3258,16 +3258,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         child.classList.add(animationClass);
                         setTimeout(() => {
                             child.classList.add('animate');
-                        }, index * 400);
+                        }, index * 100);
                     });
                     
-                    // PROJECT CARDS - Spectacular entries (SLOWER)
+                    // PROJECT CARDS - Spectacular entries (FASTER)
                     const projectCards = element.querySelectorAll('.project-card');
                     const projectAnimations = [
                         { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 0 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 300 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 600 },
-                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 900 }
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 100 },
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 200 },
+                        { transform: 'translateY(0) scale(1) rotate(0deg)', delay: 300 }
                     ];
                     
                     projectCards.forEach((card, index) => {
@@ -3279,17 +3279,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, animation.delay);
                     });
                     
-                    // SERVICE CARDS - Rotating entries (SLOWER)
+                    // SERVICE CARDS - Rotating entries (FASTER)
                     const serviceCards = element.querySelectorAll('.service-card');
                     serviceCards.forEach((card, index) => {
                         setTimeout(() => {
                             card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
                             card.style.opacity = '1';
                             card.classList.add('hover-dance'); // Add hover dance
-                        }, index * 350);
+                        }, index * 120);
                     });
                     
-                    // SKILL BARS - Animated progress with rotation (SLOWER)
+                    // SKILL BARS - Animated progress with rotation (FASTER)
                     const skillBars = element.querySelectorAll('.skill-bar');
                     skillBars.forEach((bar, index) => {
                         setTimeout(() => {
