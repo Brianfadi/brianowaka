@@ -38,7 +38,7 @@ else
     echo "✗ Database connection failed"
     echo "Checking configuration..."
     php check-db.php || true
-    exit 1
+    echo "Continuing anyway - migrations will fail if DB is not ready"
 fi
 
 # Create storage link (ignore if exists)
@@ -50,24 +50,24 @@ php artisan storage:link || echo "  Storage link already exists (OK)"
 echo ""
 echo "=== Running Migrations ==="
 php artisan migrate --force || {
-    echo "✗ Migration failed"
-    exit 1
+    echo "✗ Migration failed - check database connection"
+    echo "Continuing anyway..."
 }
 
 # Clear caches
 echo ""
 echo "=== Clearing Caches ==="
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
+php artisan cache:clear || true
+php artisan config:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
 
 # Cache config, routes, and views for production
 echo ""
 echo "=== Caching for Production ==="
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan config:cache || echo "Config cache failed"
+php artisan route:cache || echo "Route cache failed"
+php artisan view:cache || echo "View cache failed"
 
 # Show application info
 echo ""
@@ -78,14 +78,37 @@ echo "Environment: $APP_ENV"
 echo "Debug Mode: $APP_DEBUG"
 echo "URL: $APP_URL"
 
+# Test nginx config
+echo ""
+echo "=== Testing Nginx Configuration ==="
+nginx -t || {
+    echo "✗ Nginx configuration test failed"
+    exit 1
+}
+
 # Start PHP-FPM in background
 echo ""
 echo "=== Starting PHP-FPM ==="
-php-fpm -D
+php-fpm -D || {
+    echo "✗ PHP-FPM failed to start"
+    exit 1
+}
+
+# Give PHP-FPM a moment to start
+sleep 2
+
+# Verify PHP-FPM is running
+if ! pgrep -x php-fpm > /dev/null; then
+    echo "✗ PHP-FPM is not running"
+    exit 1
+fi
+echo "✓ PHP-FPM is running"
 
 # Start Nginx in foreground
 echo ""
 echo "=== Starting Nginx ==="
 echo "Application is ready! 🚀"
+echo "Listening on port 8000"
+echo "Health check: http://localhost:8000/health"
 echo "================================"
-nginx -g 'daemon off;'
+exec nginx -g 'daemon off;'
