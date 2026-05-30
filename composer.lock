@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6eac746f81d493178c1cdf34f06b10ae",
+    "content-hash": "4545590fee865fd52d99c91a738ac93b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1204,6 +1204,76 @@
                 }
             ],
             "time": "2025-08-22T14:27:06+00:00"
+        },
+        {
+            "name": "j0k3r/php-imgur-api-client",
+            "version": "4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/j0k3r/php-imgur-api-client.git",
+                "reference": "67cbcbe2a1034caede1fff98f0c1cbf77c9e074c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/j0k3r/php-imgur-api-client/zipball/67cbcbe2a1034caede1fff98f0c1cbf77c9e074c",
+                "reference": "67cbcbe2a1034caede1fff98f0c1cbf77c9e074c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "guzzlehttp/guzzle": "^7.0",
+                "php": ">=8.2"
+            },
+            "replace": {
+                "adyg/php-imgur-api-client": "self.version"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imgur\\": "lib/Imgur/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Benoist",
+                    "email": "jeremy.benoist@gmail.com",
+                    "homepage": "https://www.j0k3r.net"
+                },
+                {
+                    "name": "Adrian Ghiuta",
+                    "email": "adrian.ghiuta@gmail.com",
+                    "homepage": "http://adyg.github.com"
+                }
+            ],
+            "description": "Imgur API v3 client",
+            "homepage": "https://github.com/j0k3r/php-imgur-api-client",
+            "keywords": [
+                "api",
+                "imgur"
+            ],
+            "support": {
+                "issues": "https://github.com/j0k3r/php-imgur-api-client/issues",
+                "source": "https://github.com/j0k3r/php-imgur-api-client/tree/4.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/j0k3r",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-04-21T19:12:41+00:00"
         },
         {
             "name": "laravel/framework",
