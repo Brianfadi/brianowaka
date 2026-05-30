@@ -48,9 +48,10 @@ class ProjectController extends Controller
             'category_id'       => 'nullable|exists:categories,id',
             'demo_link'         => 'nullable|url',
             'github_link'       => 'nullable|url',
+            'image_files.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB max
         ]);
 
-        $data = $request->except(['tech_stack', 'features', 'images', '_token']);
+        $data = $request->except(['tech_stack', 'features', 'images', 'image_files', '_token']);
         $data['slug']        = Str::slug($request->title);
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_for_sale'] = $request->boolean('is_for_sale');
@@ -58,7 +59,28 @@ class ProjectController extends Controller
 
         $data['tech_stack'] = $this->parseTextarea($request->tech_stack);
         $data['features']   = $this->parseTextarea($request->features);
-        $data['images']     = $this->parseTextarea($request->images);
+        
+        // Handle image uploads
+        $imageUrls = [];
+        
+        // Process uploaded files
+        if ($request->hasFile('image_files')) {
+            foreach ($request->file('image_files') as $file) {
+                try {
+                    $path = $file->store('projects', config('filesystems.default'));
+                    $url = \Storage::url($path);
+                    $imageUrls[] = $url;
+                } catch (\Exception $e) {
+                    \Log::error('Error uploading project image: ' . $e->getMessage());
+                }
+            }
+        }
+        
+        // Add URLs from textarea (if any)
+        $textareaUrls = $this->parseTextarea($request->images);
+        $imageUrls = array_merge($imageUrls, $textareaUrls);
+        
+        $data['images'] = $imageUrls;
 
         Project::create($data);
 
@@ -87,9 +109,10 @@ class ProjectController extends Controller
             'category_id'       => 'nullable|exists:categories,id',
             'demo_link'         => 'nullable|url',
             'github_link'       => 'nullable|url',
+            'image_files.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB max
         ]);
 
-        $data = $request->except(['tech_stack', 'features', 'images', '_token', '_method']);
+        $data = $request->except(['tech_stack', 'features', 'images', 'image_files', '_token', '_method']);
         $data['slug']        = Str::slug($request->title);
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_for_sale'] = $request->boolean('is_for_sale');
@@ -97,7 +120,40 @@ class ProjectController extends Controller
 
         $data['tech_stack'] = $this->parseTextarea($request->tech_stack);
         $data['features']   = $this->parseTextarea($request->features);
-        $data['images']     = $this->parseTextarea($request->images);
+        
+        // Handle image uploads
+        $imageUrls = [];
+        
+        // Process uploaded files
+        if ($request->hasFile('image_files')) {
+            foreach ($request->file('image_files') as $file) {
+                try {
+                    $path = $file->store('projects', config('filesystems.default'));
+                    $url = \Storage::url($path);
+                    $imageUrls[] = $url;
+                } catch (\Exception $e) {
+                    \Log::error('Error uploading project image: ' . $e->getMessage());
+                }
+            }
+        }
+        
+        // Add URLs from textarea (if any)
+        $textareaUrls = $this->parseTextarea($request->images);
+        
+        // If textarea has URLs, use them (replaces existing)
+        // If textarea is empty but files were uploaded, add to existing
+        // If both empty, keep existing
+        if (!empty($textareaUrls)) {
+            $imageUrls = array_merge($imageUrls, $textareaUrls);
+        } elseif (empty($imageUrls)) {
+            // Keep existing images if no new ones provided
+            $imageUrls = $project->images ?? [];
+        } else {
+            // Add new uploads to existing images
+            $imageUrls = array_merge($project->images ?? [], $imageUrls);
+        }
+        
+        $data['images'] = $imageUrls;
 
         $project->update($data);
 
