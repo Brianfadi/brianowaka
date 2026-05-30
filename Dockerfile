@@ -39,19 +39,20 @@ RUN chmod -R 775 storage bootstrap/cache \
     && chmod -R 775 public/storage \
     && chown -R www-data:www-data public/storage
 
-# Copy nginx config
-COPY docker/nginx.conf /etc/nginx/sites-available/default
+# Copy nginx config and set up properly
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/sites-enabled/default
 
-# Copy startup script
+# Copy and set up startup script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Copy startup script (legacy)
 COPY railway-start.sh /usr/local/bin/railway-start.sh
 RUN chmod +x /usr/local/bin/railway-start.sh
 
 # Expose port
 EXPOSE 8000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
-
-# At runtime: use improved startup with better error handling
-CMD ["/bin/sh", "-c", "set -e && echo 'Starting application...' && php artisan storage:link 2>/dev/null || true && echo 'Running migrations...' && php artisan migrate --force && echo 'Clearing caches...' && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && echo 'Starting PHP-FPM...' && php-fpm -D && sleep 2 && echo 'Testing PHP-FPM...' && pgrep php-fpm || exit 1 && echo 'Starting Nginx...' && nginx -t && exec nginx -g 'daemon off;'"]
+# Use the startup script
+CMD ["/usr/local/bin/start.sh"]
