@@ -1,6 +1,6 @@
 FROM php:8.4-fpm
 
-# Install system dependencies
+# Install system dependencies (updated: added procps for process management)
 RUN apt-get update && apt-get install -y \
     git \
     curl \
