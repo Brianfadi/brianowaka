@@ -58,5 +58,20 @@ RUN chmod +x /usr/local/bin/railway-start.sh
 # Expose port
 EXPOSE 8000
 
-# Use the startup script
-CMD ["/usr/local/bin/start.sh"]
+# Use simple inline startup - no external script
+CMD php artisan storage:link 2>&1 || true && \
+    echo "Running migrations..." && \
+    php artisan migrate --force 2>&1 && \
+    echo "Caching..." && \
+    php artisan config:cache 2>&1 && \
+    php artisan route:cache 2>&1 && \
+    php artisan view:cache 2>&1 && \
+    echo "Starting PHP-FPM..." && \
+    php-fpm -D && \
+    sleep 3 && \
+    echo "PHP-FPM status:" && \
+    ps aux | grep php-fpm | grep -v grep && \
+    echo "Starting Nginx..." && \
+    nginx -t && \
+    echo "=== Services Started ===" && \
+    exec nginx -g 'daemon off;'
