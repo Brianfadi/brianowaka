@@ -42,7 +42,15 @@ class Experience extends Model
 
     public function getFormattedDurationAttribute()
     {
+        if (!$this->start_date) {
+            return 'N/A';
+        }
+        
         if ($this->is_current) {
+            return $this->start_date->format('M Y') . ' - Present';
+        }
+        
+        if (!$this->end_date) {
             return $this->start_date->format('M Y') . ' - Present';
         }
         
