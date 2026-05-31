@@ -28,7 +28,7 @@
     </head>
     <body class="font-sans antialiased">
         <!-- Topbar -->
-        <div class="sticky top-0 z-[60] bg-gradient-to-r from-purple-900 via-pink-900 to-purple-950 text-gray-200 text-xs sm:text-sm">
+        <div class="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-purple-900 via-pink-900 to-purple-950 text-gray-200 text-xs sm:text-sm">
             <div class="w-full px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-9">
                     <div class="flex items-center gap-3 sm:gap-5">
