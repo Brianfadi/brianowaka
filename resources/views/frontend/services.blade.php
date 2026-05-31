@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Services - Web Development & Solutions')
+
 @section('content')
 <div class="min-h-screen bg-gray-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 py-4">
     <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-16">

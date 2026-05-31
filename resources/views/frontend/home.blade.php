@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home - Full Stack Developer & Web Solutions')
+
 @section('content')
 <div class="bg-white dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300">
 

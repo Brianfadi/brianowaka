@@ -4,7 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin — {{ config('app.name', 'Portfolio') }}</title>
+    <title>Admin — {{ \App\Models\Setting::get('site_name', 'Brian Owaka') }}</title>
+    
+    <!-- Favicon - Profile Photo -->
+    @php
+        $profilePhoto = \App\Models\Setting::get('profile_photo');
+    @endphp
+    @if($profilePhoto)
+        <link rel="icon" type="image/x-icon" href="{{ \Storage::url($profilePhoto) }}">
+        <link rel="apple-touch-icon" href="{{ \Storage::url($profilePhoto) }}">
+    @else
+        <!-- Default favicon if no profile photo -->
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    @endif
+    
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])

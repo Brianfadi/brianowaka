@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Portfolio - My Projects & Work')
+
 @section('content')
 <div class="min-h-screen bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300" x-data="portfolioApp()">
     {{-- ── SCROLL PROGRESS BAR ──────────────────────────────────────────────── --}}

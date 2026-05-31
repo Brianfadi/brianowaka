@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'About Me - Background & Experience')
+
 @section('content')
 <div class="min-h-screen bg-white dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 text-gray-900 dark:text-slate-100" x-data="aboutApp()">
     {{-- ── SCROLL PROGRESS BAR ──────────────────────────────────────────────── --}}

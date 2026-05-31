@@ -5,7 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Brian Owaka') }} - {{ __('Login') }}</title>
+        <title>{{ \App\Models\Setting::get('site_name', 'Brian Owaka') }} - {{ __('Login') }}</title>
+        
+        <!-- Favicon - Profile Photo -->
+        @php
+            $profilePhoto = \App\Models\Setting::get('profile_photo');
+        @endphp
+        @if($profilePhoto)
+            <link rel="icon" type="image/x-icon" href="{{ \Storage::url($profilePhoto) }}">
+            <link rel="apple-touch-icon" href="{{ \Storage::url($profilePhoto) }}">
+        @else
+            <!-- Default favicon if no profile photo -->
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

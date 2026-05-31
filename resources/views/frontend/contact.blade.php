@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Contact Me - Get In Touch')
+
 @section('content')
 <div class="min-h-screen bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300" x-data="contactApp()">
     {{-- ── SCROLL PROGRESS BAR ──────────────────────────────────────────────── --}}
