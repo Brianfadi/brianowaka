@@ -18,11 +18,21 @@
                             <div class="absolute -inset-2 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110 animate-pulse"></div>
                             
                             <!-- Main logo -->
-                            <div class="relative w-10 h-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-xl group-hover:shadow-purple-500/25">
-                                <span class="text-white font-bold text-lg group-hover:text-white transition-colors duration-300">BO</span>
-                                <!-- Inner shine effect -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </div>
+                            @if(!empty($settings['profile_photo']))
+                                <!-- Profile Photo Logo -->
+                                <div class="relative w-10 h-10 rounded-xl overflow-hidden transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-xl group-hover:shadow-purple-500/25 ring-2 ring-gradient-to-br ring-blue-600/50">
+                                    <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                    <!-- Inner shine effect -->
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                            @else
+                                <!-- Fallback BO Logo -->
+                                <div class="relative w-10 h-10 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-xl group-hover:shadow-purple-500/25">
+                                    <span class="text-white font-bold text-lg group-hover:text-white transition-colors duration-300">BO</span>
+                                    <!-- Inner shine effect -->
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                            @endif
                             
                             <!-- Floating particles -->
                             <div class="absolute -top-1 -right-1 w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-bounce" style="animation-delay: 0.1s"></div>
