@@ -1,7 +1,9 @@
 <header class="sticky top-0 z-50">
 <!-- Topbar -->
-<div class="bg-gradient-to-r from-pink-200 via-purple-200 to-pink-100 dark:from-purple-900 dark:via-pink-900 dark:to-purple-950 text-gray-600 dark:text-gray-200 text-xs sm:text-sm">
-    <div class="w-full px-4 sm:px-6 lg:px-8">
+<div class="relative text-gray-700 dark:text-gray-200 text-xs sm:text-sm">
+    <div class="absolute inset-0 dark:hidden" style="background: linear-gradient(to right, #f9a8d4, #d8b4fe, #fbcfe8);"></div>
+    <div class="absolute inset-0 hidden dark:block dark:bg-gradient-to-r dark:from-purple-900 dark:via-pink-900 dark:to-purple-950"></div>
+    <div class="relative w-full px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-9">
             <div class="flex items-center gap-3 sm:gap-5">
                 <a href="mailto:{{ $topbar['contact_email'] }}" class="hidden sm:inline-flex items-center gap-1.5 hover:text-white transition-colors duration-200">
@@ -57,6 +59,8 @@
                 @endif
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </div>
 
