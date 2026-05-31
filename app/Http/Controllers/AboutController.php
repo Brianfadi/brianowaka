@@ -17,6 +17,7 @@ class AboutController extends Controller
         $experiences = Experience::ordered()->get();
         $educations = Education::ordered()->get();
         
+        $profilePhotoPath = Setting::get('profile_photo');
         $settings = [
             'bio' => Setting::get('bio', 'I am a passionate full-stack developer with expertise in modern web technologies.'),
             'education' => Setting::get('education', 'University of Kabianga - Bachelor of Computer Science'),
@@ -39,6 +40,7 @@ class AboutController extends Controller
             'years_experience' => Setting::get('years_experience', 5),
             'client_satisfaction' => Setting::get('client_satisfaction', 100),
             'technologies_count' => Setting::get('technologies_count', 20),
+            'profile_photo' => $profilePhotoPath ? \Illuminate\Support\Facades\Storage::url($profilePhotoPath) : null,
         ];
         
         $skillsByCategory = $skills->groupBy('category');

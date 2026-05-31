@@ -13,6 +13,7 @@ class ContactController extends Controller
         $service = $request->get('service');
         
         // Get dynamic settings
+        $profilePhotoPath = Setting::get('profile_photo');
         $settings = [
             'contact_email' => Setting::get('contact_email', 'brian@brianowaka.com'),
             'contact_phone' => Setting::get('contact_phone', '+254 123 456 789'),
@@ -25,6 +26,7 @@ class ContactController extends Controller
             'whatsapp_number' => Setting::get('whatsapp_number', '+254123456789'),
             'response_time' => Setting::get('response_time', '24 hours'),
             'availability' => Setting::get('availability', 'Mon-Fri, 9AM-6PM EAT'),
+            'profile_photo' => $profilePhotoPath ? \Illuminate\Support\Facades\Storage::url($profilePhotoPath) : null,
         ];
         
         return view('frontend.contact', compact('service', 'settings'));
