@@ -1,6 +1,6 @@
 <header class="sticky top-0 z-50">
 <!-- Topbar -->
-<div class="bg-gradient-to-r from-purple-100 via-pink-100 to-purple-200 dark:from-purple-900 dark:via-pink-900 dark:to-purple-950 text-gray-600 dark:text-gray-200 text-xs sm:text-sm">
+<div class="bg-gradient-to-r from-pink-200 via-purple-200 to-pink-100 dark:from-purple-900 dark:via-pink-900 dark:to-purple-950 text-gray-600 dark:text-gray-200 text-xs sm:text-sm">
     <div class="w-full px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-9">
             <div class="flex items-center gap-3 sm:gap-5">
