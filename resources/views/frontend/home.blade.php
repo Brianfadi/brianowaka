@@ -1246,6 +1246,7 @@
                     @php
                         $thumbGrads = ['from-blue-600 via-blue-500 to-violet-700','from-green-600 via-emerald-500 to-teal-700','from-orange-600 via-amber-500 to-red-700','from-pink-600 via-rose-500 to-rose-700','from-cyan-600 via-sky-500 to-blue-700','from-indigo-600 via-purple-500 to-purple-700'];
                         $tg = $thumbGrads[$loop->index % count($thumbGrads)];
+                        $imgs = is_string($project->images) ? (json_decode($project->images, true) ?? []) : ($project->images ?? []);
                     @endphp
                     <div class="group relative rounded-xl bg-white dark:bg-black border border-blue-200 dark:border-gray-700
                                 hover:border-blue-300 dark:hover:border-gray-600 hover:shadow-lg hover:shadow-blue-500/15 dark:hover:shadow-black/40
@@ -1254,8 +1255,8 @@
 
                         {{-- Thumbnail --}}
                         <div class="relative h-32 bg-gradient-to-br {{ $tg }} overflow-hidden flex-shrink-0">
-                            @if($project->images && count($project->images) > 0)
-                                <img src="{{ Storage::url($project->images[0]) }}" alt="{{ $project->title }}"
+                            @if(!empty($imgs))
+                                <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 transition-all duration-700"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 transform translate-x-[-100%] group-hover:translate-x-[100%]"></div>
