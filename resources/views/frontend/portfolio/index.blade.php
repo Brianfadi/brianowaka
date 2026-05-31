@@ -105,9 +105,9 @@
                     $imgs = is_string($project->images) ? (json_decode($project->images, true) ?? []) : ($project->images ?? []);
                 @endphp
                 <a href="{{ route('portfolio.show', $project) }}"
-                   class="group relative bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300 rounded-2xl shadow-xl dark:shadow-indigo-900/50 transition-shadow duration-300 overflow-hidden hover-lift dashboard-card animate-slide-in-up project-card glow-on-hover" style="animation-delay: {{ $index * 0.1 }}s">
+                   class="group relative bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300 rounded-2xl shadow-xl dark:shadow-indigo-900/50 transition-shadow duration-300 overflow-hidden hover-lift dashboard-card animate-slide-in-up project-card glow-on-hover flex flex-col" style="animation-delay: {{ $index * 0.1 }}s">
                     {{-- Image --}}
-                    <div class="h-56 relative overflow-hidden cursor-pointer" @click.prevent="openLightbox('{{ !empty($imgs) ? $imgs[0] : '' }}')">
+                    <div class="h-56 relative overflow-hidden flex-shrink-0 cursor-pointer" @click.prevent="openLightbox('{{ !empty($imgs) ? $imgs[0] : '' }}')">
                         @if(!empty($imgs))
                             <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
