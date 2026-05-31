@@ -325,11 +325,18 @@
             <!-- Enhanced Mobile Logo Section -->
             <div class="flex items-center space-x-3 pb-4 border-b border-gray-200/50 dark:border-indigo-500/20 bg-gradient-to-r from-blue-50/30 to-purple-50/30 dark:from-blue-950/30 dark:to-purple-950/30 rounded-lg p-3">
                 <div class="relative">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <span class="text-white font-bold text-lg">BO</span>
-                        <!-- Shine effect -->
-                        <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
-                    </div>
+                    @if(!empty($settings['profile_photo']))
+                        <div class="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-2 ring-blue-600/50">
+                            <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
+                        </div>
+                    @else
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <span class="text-white font-bold text-lg">BO</span>
+                            <!-- Shine effect -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
+                        </div>
+                    @endif
                     <!-- Glow ring -->
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-xl blur-lg"></div>
                 </div>

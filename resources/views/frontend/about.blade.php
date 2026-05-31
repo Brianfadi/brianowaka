@@ -30,9 +30,15 @@
                 {{-- Avatar --}}
                 <div class="flex-shrink-0 page-load-animate hero-profile">
                     <div class="relative profile-photo-3d">
-                        <div class="w-44 h-44 rounded-3xl bg-white/20 dark:bg-slate-800/80 backdrop-blur-sm border border-white/30 dark:border-indigo-500/30 flex items-center justify-center shadow-2xl dark:shadow-indigo-900/50 text-6xl font-extrabold text-white tracking-tight hero-card-3d transition-colors duration-300 hover-dance pulse-glow">
-                            BO
-                        </div>
+                        @if(!empty($settings['profile_photo']))
+                            <div class="w-44 h-44 rounded-3xl overflow-hidden border border-white/30 dark:border-indigo-500/30 shadow-2xl dark:shadow-indigo-900/50 hero-card-3d transition-colors duration-300 hover-dance pulse-glow">
+                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                            </div>
+                        @else
+                            <div class="w-44 h-44 rounded-3xl bg-white/20 dark:bg-slate-800/80 backdrop-blur-sm border border-white/30 dark:border-indigo-500/30 flex items-center justify-center shadow-2xl dark:shadow-indigo-900/50 text-6xl font-extrabold text-white tracking-tight hero-card-3d transition-colors duration-300 hover-dance pulse-glow">
+                                BO
+                            </div>
+                        @endif
                         <span class="absolute -bottom-3 -right-3 flex h-7 w-7">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
                             <span class="relative inline-flex rounded-full h-7 w-7 bg-green-500 border-2 border-white items-center justify-center pulse-glow">

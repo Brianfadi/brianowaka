@@ -42,9 +42,15 @@
                     <div class="flex justify-between items-center py-6">
                         <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
                             <div class="relative">
-                                <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 border border-white/30">
-                                    <span class="text-white font-bold text-lg">BO</span>
-                                </div>
+                                @if(!empty($settings['profile_photo']))
+                                    <div class="w-10 h-10 rounded-xl overflow-hidden transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 border border-white/30">
+                                        <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                    </div>
+                                @else
+                                    <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 border border-white/30">
+                                        <span class="text-white font-bold text-lg">BO</span>
+                                    </div>
+                                @endif
                                 <div class="absolute -inset-1 bg-white/20 rounded-xl opacity-0 group-hover:opacity-30 blur transition-opacity duration-300"></div>
                             </div>
                             <div class="hidden sm:block">
@@ -69,8 +75,12 @@
                 <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
                     <!-- Logo and Title -->
                     <div class="text-center mb-8">
-                        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-4 transform transition-all duration-300 hover:scale-110">
-                            <span class="text-white font-bold text-3xl">BO</span>
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-4 transform transition-all duration-300 hover:scale-110 overflow-hidden @if(empty($settings['profile_photo'])) bg-gradient-to-br from-blue-500 to-purple-600 @endif">
+                            @if(!empty($settings['profile_photo']))
+                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-white font-bold text-3xl">BO</span>
+                            @endif
                         </div>
                         <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
                         <p class="text-white/80">Sign in to your account to continue</p>
