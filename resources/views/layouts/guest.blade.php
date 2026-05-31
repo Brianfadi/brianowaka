@@ -70,14 +70,6 @@
 
                 <!-- Footer Links -->
                 <div class="text-center mt-8">
-                    <p class="text-white/60 text-sm">
-                        Don't have an account? 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="text-white hover:text-white/80 font-medium transition-colors duration-300">
-                                Register here
-                            </a>
-                        @endif
-                    </p>
                     <div class="mt-4 flex justify-center space-x-6">
                         <a href="#" class="text-white/60 hover:text-white transition-colors duration-300">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
