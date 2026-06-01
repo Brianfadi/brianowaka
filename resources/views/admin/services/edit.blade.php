@@ -55,7 +55,7 @@
                     <input type="url" name="image" value="{{ old('image', $service->image) }}" class="form-input">
                     @if($service->image)
                         <div class="mt-2 h-24 bg-gray-800 rounded-lg overflow-hidden">
-                            <img src="{{ $service->image }}" alt="" class="w-full h-full object-cover">
+                            <img src="{{ $service->image }}" alt="" class="w-full h-full object-cover" loading="lazy">
                         </div>
                     @endif
                 </div>

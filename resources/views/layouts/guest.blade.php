@@ -45,7 +45,7 @@
                             <div class="relative">
                                 @if(!empty($settings['profile_photo']))
                                     <div class="w-10 h-10 rounded-xl overflow-hidden transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 border border-white/30">
-                                        <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                         <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover" loading="eager">
                                     </div>
                                 @else
                                     <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 border border-white/30">
@@ -78,7 +78,7 @@
                     <div class="text-center mb-8">
                         <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-4 transform transition-all duration-300 hover:scale-110 overflow-hidden @if(empty($settings['profile_photo'])) bg-gradient-to-br from-blue-500 to-purple-600 @endif">
                             @if(!empty($settings['profile_photo']))
-                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover" loading="eager">
                             @else
                                 <span class="text-white font-bold text-3xl">BO</span>
                             @endif

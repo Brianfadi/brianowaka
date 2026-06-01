@@ -28,7 +28,7 @@
             {{-- Logo --}}
             <div class="flex-shrink-0">
                 @if($edu->logo)
-                <img src="{{ Storage::url($edu->logo) }}" alt="{{ $edu->institution }}" class="w-16 h-16 rounded-lg object-cover">
+                <img src="{{ Storage::url($edu->logo) }}" alt="{{ $edu->institution }}" class="w-16 h-16 rounded-lg object-cover" loading="lazy">
                 @else
                 <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

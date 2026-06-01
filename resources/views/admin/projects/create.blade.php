@@ -272,7 +272,7 @@ function handleFileSelect(event) {
             previewDiv.className = 'relative group';
             previewDiv.innerHTML = `
                 <div class="relative aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-                    <img src="${e.target.result}" class="w-full h-full object-cover" alt="Preview ${index + 1}">
+                    <img src="${e.target.result}" class="w-full h-full object-cover" alt="Preview ${index + 1}" loading="lazy">
                     <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span class="text-white text-xs font-medium">${file.name}</span>
                     </div>

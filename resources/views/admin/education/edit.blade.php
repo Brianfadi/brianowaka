@@ -113,7 +113,7 @@
                     <label class="block text-sm font-medium text-gray-300 mb-2">Institution Logo</label>
                     @if($education->logo)
                     <div class="mb-3 flex items-center gap-3">
-                        <img src="{{ Storage::url($education->logo) }}" alt="{{ $education->institution }}" class="w-16 h-16 rounded-lg object-cover">
+                        <img src="{{ Storage::url($education->logo) }}" alt="{{ $education->institution }}" class="w-16 h-16 rounded-lg object-cover" loading="lazy">
                         <span class="text-sm text-gray-400">Current logo</span>
                     </div>
                     @endif

@@ -268,7 +268,7 @@
                 <div class="group bg-gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl overflow-hidden hover:border-blue-300 hover:shadow-md transition-all">
                     @if($projectImage)
                     <div class="h-40 overflow-hidden bg-gray-200 dark:bg-gray-800">
-                        <img src="{{ $projectImage }}" 
+                         <img src="{{ $projectImage }}" loading="lazy"
                              alt="{{ $project->title }}" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>

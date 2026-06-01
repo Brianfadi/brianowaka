@@ -32,7 +32,7 @@
                     <div class="relative profile-photo-3d">
                         @if(!empty($settings['profile_photo']))
                             <div class="w-44 h-44 rounded-3xl overflow-hidden border border-white/30 dark:border-indigo-500/30 shadow-2xl dark:shadow-indigo-900/50 hero-card-3d transition-colors duration-300 hover-dance pulse-glow">
-                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover" loading="eager">
                             </div>
                         @else
                             <div class="w-44 h-44 rounded-3xl bg-white/20 dark:bg-slate-800/80 backdrop-blur-sm border border-white/30 dark:border-indigo-500/30 flex items-center justify-center shadow-2xl dark:shadow-indigo-900/50 text-6xl font-extrabold text-white tracking-tight hero-card-3d transition-colors duration-300 hover-dance pulse-glow">
@@ -458,7 +458,7 @@
         </svg>
     </button>
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
     <script>
     function aboutApp() {
         return {

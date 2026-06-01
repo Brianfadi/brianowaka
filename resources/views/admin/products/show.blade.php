@@ -36,12 +36,12 @@
         @if($product->images && count($product->images) > 0)
         <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
             <div class="aspect-video bg-gray-800">
-                <img src="{{ $product->images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="featured-img">
+                <img src="{{ $product->images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="featured-img" loading="eager">
             </div>
             @if(count($product->images) > 1)
             <div class="flex gap-2 p-3 overflow-x-auto">
                 @foreach($product->images as $i => $img)
-                <img src="{{ $img }}" alt=""
+                <img src="{{ $img }}" alt="" loading="lazy"
                      onclick="document.getElementById('featured-img').src='{{ $img }}'"
                      class="w-16 h-12 object-cover rounded-lg cursor-pointer flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity {{ $i === 0 ? 'ring-2 ring-green-500 opacity-100' : '' }}">
                 @endforeach

@@ -24,7 +24,7 @@
         @if($service->image)
         <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
             <div class="h-48 bg-gray-800">
-                <img src="{{ $service->image }}" alt="{{ $service->title }}" class="w-full h-full object-cover">
+                <img src="{{ $service->image }}" alt="{{ $service->title }}" class="w-full h-full object-cover" loading="lazy">
             </div>
         </div>
         @endif

@@ -67,7 +67,7 @@
                         <div class="flex items-center gap-3">
                             @if($product->images && count($product->images) > 0)
                                 <img src="{{ $product->images[0] }}" alt="{{ $product->name }}"
-                                     class="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-gray-800">
+                                     class="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-gray-800" loading="lazy">
                             @else
                                 <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                                     {{ strtoupper(substr($product->name, 0, 1)) }}

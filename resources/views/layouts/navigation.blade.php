@@ -1,5 +1,5 @@
 <nav x-data="{ open: false, scrolled: false }" 
-     x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
+     x-init="let _ticking = false; window.addEventListener('scroll', () => { if (!_ticking) { window.requestAnimationFrame(() => { scrolled = window.scrollY > 20; _ticking = false; }); _ticking = true; } })"
      :class="scrolled ? 'bg-white/95 dark:bg-slate-900/95 dark:backdrop-blur-xl border-b border-gray-200/80 dark:border-indigo-500/20 shadow-2xl' : 'bg-gradient-to-r from-white/90 via-white/80 to-blue-50/20 dark:from-slate-900/90 dark:via-indigo-950/80 dark:to-slate-900/20 backdrop-blur-lg border-b border-gray-200/30 dark:border-indigo-500/10 shadow-lg'"
      class="sticky top-0 z-50 transition-all duration-300">
     <!-- Enhanced Navigation with Animated Border -->
@@ -21,7 +21,7 @@
                             @if(!empty($settings['profile_photo']))
                                 <!-- Profile Photo Logo -->
                                 <div class="relative w-10 h-10 rounded-xl overflow-hidden transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-xl group-hover:shadow-purple-500/25 ring-2 ring-gradient-to-br ring-blue-600/50">
-                                    <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                                    <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover" loading="eager">
                                     <!-- Inner shine effect -->
                                     <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 </div>
@@ -327,7 +327,7 @@
                 <div class="relative">
                     @if(!empty($settings['profile_photo']))
                         <div class="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-2 ring-blue-600/50">
-                            <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover">
+                            <img src="{{ $settings['profile_photo'] }}" alt="Profile" class="w-full h-full object-cover" loading="eager">
                             <div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
                         </div>
                     @else

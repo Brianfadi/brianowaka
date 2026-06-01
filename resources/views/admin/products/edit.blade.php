@@ -85,7 +85,7 @@
             <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-4">
                 @foreach($product->images as $img)
                 <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-                    <img src="{{ $img }}" alt="" class="w-full h-full object-cover">
+                    <img src="{{ $img }}" alt="" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 @endforeach
             </div>

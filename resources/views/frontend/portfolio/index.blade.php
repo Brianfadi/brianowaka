@@ -109,8 +109,8 @@
                     {{-- Image --}}
                     <div class="h-56 relative overflow-hidden flex-shrink-0 cursor-pointer" @click.prevent="openLightbox('{{ !empty($imgs) ? $imgs[0] : '' }}')">
                         @if(!empty($imgs))
-                            <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                             <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
+                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-pink-600 flex items-center justify-center">
                                 <div class="w-20 h-20 bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300/10 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform pulse-ring">
@@ -268,8 +268,8 @@
                     {{-- Thumbnail --}}
                     <div class="h-52 relative overflow-hidden flex-shrink-0 cursor-pointer" @click.prevent="openLightbox('{{ !empty($imgs) ? $imgs[0] : '' }}')">
                         @if(!empty($imgs))
-                            <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                             <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
+                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-pink-600 flex items-center justify-center">
                                 <div class="w-16 h-16 bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm transition-colors duration-300/10 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform pulse-ring">
@@ -461,7 +461,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
-        <img :src="lightboxImage" 
+        <img :src="lightboxImage" loading="lazy"
              @click.stop
              class="max-h-[90vh] w-auto rounded-2xl shadow-2xl"
              alt="Project preview">
@@ -485,7 +485,7 @@
 </button>
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <script>
 function portfolioApp() {
     return {

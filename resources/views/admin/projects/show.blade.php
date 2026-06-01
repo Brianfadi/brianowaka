@@ -37,13 +37,13 @@
         <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
             {{-- Featured image --}}
             <div class="aspect-video bg-gray-800">
-                <img src="{{ $project->images[0] }}" alt="{{ $project->title }}" class="w-full h-full object-cover" id="featured-img">
+                <img src="{{ $project->images[0] }}" alt="{{ $project->title }}" class="w-full h-full object-cover" id="featured-img" loading="eager">
             </div>
             {{-- Thumbnails --}}
             @if(count($project->images) > 1)
             <div class="flex gap-2 p-3 overflow-x-auto">
                 @foreach($project->images as $i => $img)
-                <img src="{{ $img }}" alt=""
+                <img src="{{ $img }}" alt="" loading="lazy"
                      onclick="document.getElementById('featured-img').src='{{ $img }}'"
                      class="w-16 h-12 object-cover rounded-lg cursor-pointer flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity {{ $i === 0 ? 'ring-2 ring-blue-500 opacity-100' : '' }}">
                 @endforeach

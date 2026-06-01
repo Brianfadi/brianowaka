@@ -92,7 +92,7 @@
                     @if(!empty($showImages))
                     <div class="group bg-gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl dark:shadow-indigo-900/30 transition-all duration-500 animate-slide-in-up">
                         <div class="aspect-video relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-slate-800 dark:to-slate-900">
-                            <img src="{{ $showImages[0] }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="{{ $showImages[0] }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="eager">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
                             {{-- Image overlay badge --}}
@@ -107,7 +107,7 @@
                         <div class="grid grid-cols-4 gap-3 p-4 bg-white/50 dark:bg-slate-800/50">
                             @foreach(array_slice($showImages, 1, 4) as $img)
                             <div class="group/thumb aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-500 dark:hover:border-blue-400">
-                                <img src="{{ $img }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-500">
+                                <img src="{{ $img }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-500" loading="lazy">
                             </div>
                             @endforeach
                         </div>
@@ -200,7 +200,7 @@
                                class="group bg-white dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl overflow-hidden hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-2xl dark:hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-2 animate-fade-in" style="animation-delay: {{ $index * 0.1 }}s;">
                                 <div class="h-40 overflow-hidden relative">
                                     @if(!empty($relImgs))
-                                    <img src="{{ $relImgs[0] }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <img src="{{ $relImgs[0] }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
                                     @else
                                     <div class="w-full h-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"></div>
                                     @endif

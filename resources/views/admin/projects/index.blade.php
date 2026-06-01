@@ -67,7 +67,7 @@
                         <div class="flex items-center gap-3">
                             @if($project->images && count($project->images) > 0)
                                 <img src="{{ $project->images[0] }}" alt="{{ $project->title }}"
-                                     class="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-gray-800">
+                                     class="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-gray-800" loading="lazy">
                             @else
                                 <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                                     {{ strtoupper(substr($project->title, 0, 1)) }}

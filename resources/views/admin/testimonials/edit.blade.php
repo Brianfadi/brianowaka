@@ -80,7 +80,7 @@
                     <label class="block text-sm font-medium text-gray-300 mb-2">Avatar Image</label>
                     @if($testimonial->avatar)
                     <div class="mb-3 flex items-center gap-3">
-                        <img src="{{ Storage::url($testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-16 h-16 rounded-full object-cover">
+                        <img src="{{ Storage::url($testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-16 h-16 rounded-full object-cover" loading="lazy">
                         <span class="text-sm text-gray-400">Current avatar</span>
                     </div>
                     @endif

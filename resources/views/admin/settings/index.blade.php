@@ -87,7 +87,7 @@
                                         @if($isImage)
                                             <img src="{{ $current }}" alt="{{ $field['label'] }}"
                                                  class="h-14 w-14 object-contain rounded-lg border border-gray-700 bg-gray-800 p-1"
-                                                 id="preview_{{ $field['key'] }}">
+                                                 id="preview_{{ $field['key'] }}" loading="lazy">
                                         @else
                                             <a href="{{ $current }}" target="_blank"
                                                class="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2">

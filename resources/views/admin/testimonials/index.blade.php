@@ -28,7 +28,7 @@
         <div class="flex items-start justify-between mb-4">
             <div class="flex items-center gap-3">
                 @if($testimonial->avatar)
-                <img src="{{ Storage::url($testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-12 h-12 rounded-full object-cover">
+                <img src="{{ Storage::url($testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-12 h-12 rounded-full object-cover" loading="lazy">
                 @else
                 <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
                     {{ $testimonial->initials }}

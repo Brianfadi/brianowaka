@@ -46,7 +46,7 @@
                             <div class="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-2xl sm:rounded-3xl overflow-hidden border-4 border-white dark:border-gray-800 shadow-2xl mx-auto ring-4 ring-blue-100 dark:ring-blue-900/30 group-hover:ring-8 transition-all duration-500">
                                 @if($settings['profile_photo'] ?? null)
                                     <img src="{{ $settings['profile_photo'] }}" alt="{{ $settings['site_name'] ?? 'Profile' }}"
-                                         class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700">
+                                         class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" loading="eager">
                                 @else
                                     <div class="w-full h-full bg-gradient-to-br from-blue-600 via-violet-600 to-pink-600 flex flex-col items-center justify-center gap-1 sm:gap-2 group-hover:from-blue-500 group-hover:via-violet-500 group-hover:to-pink-500 transition-all duration-500">
                                         <svg class="w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 text-white/40 group-hover:text-white/60 transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -1023,7 +1023,7 @@
                                 <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-600 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
                                 <img src="{{ $settings['profile_photo'] }}" 
                                      alt="{{ $settings['site_name'] ?? 'Profile' }}"
-                                     class="relative w-full h-full max-w-sm max-h-80 object-cover rounded-3xl shadow-2xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-700">
+                                     class="relative w-full h-full max-w-sm max-h-80 object-cover rounded-3xl shadow-2xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-700" loading="lazy">
                             </div>
                         @else
                             {{-- Placeholder Graphic --}}
@@ -1256,8 +1256,8 @@
                         {{-- Thumbnail --}}
                         <div class="relative h-32 bg-gradient-to-br {{ $tg }} overflow-hidden flex-shrink-0">
                             @if(!empty($imgs))
-                                <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
-                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400">
+                                 <img src="{{ $imgs[0] }}" alt="{{ $project->title }}"
+                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400" loading="lazy">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 transition-all duration-700"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 transform translate-x-[-100%] group-hover:translate-x-[100%]"></div>
                             @else
@@ -1608,7 +1608,7 @@
                         <div class="relative h-48 bg-gradient-to-br {{ ['from-indigo-600 to-purple-700','from-blue-600 to-cyan-700','from-green-600 to-teal-700'][$index % 3] }} overflow-hidden flex-shrink-0 group-hover:h-52 transition-all duration-500">
                             @if($product->images && count($product->images) > 0)
                                 <img src="{{ Storage::url($product->images[0]) }}" alt="{{ $product->name }}"
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
                             @else
                                 <div class="w-full h-full flex items-center justify-center relative overflow-hidden">
                                     <div class="absolute inset-0 opacity-[0.08]"
@@ -1806,9 +1806,9 @@
                             {{-- Photo --}}
                             <div class="relative w-52 h-52 lg:w-60 lg:h-60 rounded-3xl overflow-hidden border-4 border-white shadow-2xl group hover:scale-105 transition-transform duration-500">
                                 @if($settings['profile_photo'] ?? null)
-                                    <img src="{{ $settings['profile_photo'] }}"
-                                         alt="{{ $settings['site_name'] ?? 'Profile' }}"
-                                         class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700">
+                                     <img src="{{ $settings['profile_photo'] }}"
+                                          alt="{{ $settings['site_name'] ?? 'Profile' }}"
+                                          class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" loading="lazy">
                                 @else
                                     <div class="w-full h-full bg-gradient-to-br from-blue-600 to-violet-700 flex items-center justify-center group-hover:from-blue-500 group-hover:to-violet-600 transition-all duration-500">
                                         <span class="text-5xl font-extrabold text-white/80 tracking-tight floating">
