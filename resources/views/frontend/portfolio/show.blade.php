@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<style>[x-cloak] { display: none !important; }</style>
 @php
     $showImages  = is_string($project->images)    ? (json_decode($project->images, true)    ?? []) : ($project->images    ?? []);
     $showFeatures = is_string($project->features)  ? (json_decode($project->features, true)  ?? []) : ($project->features  ?? []);
@@ -88,10 +89,12 @@
                 {{-- Left: main content --}}
                 <div class="flex-1 min-w-0 space-y-8">
 
-                    {{-- Images Gallery --}}
+                    {{-- Images Gallery with Lightbox --}}
                     @if(!empty($showImages))
-                    <div class="group bg-gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl dark:shadow-indigo-900/30 transition-all duration-500 animate-slide-in-up">
-                        <div class="aspect-video relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-slate-800 dark:to-slate-900">
+                    @php $galleryImages = array_values($showImages); @endphp
+                    <div x-data="galleryLightbox({{ json_encode($galleryImages) }})"
+                         class="group bg-gray-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300 border border-gray-200 dark:border-indigo-500/20 transition-colors duration-300 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl dark:shadow-indigo-900/30 transition-all duration-500 animate-slide-in-up">
+                        <div @click="open(0)" class="aspect-video relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-slate-800 dark:to-slate-900 cursor-pointer">
                             <img src="{{ $showImages[0] }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="eager">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
@@ -105,14 +108,79 @@
                         </div>
                         @if(count($showImages) > 1)
                         <div class="grid grid-cols-4 gap-3 p-4 bg-white/50 dark:bg-slate-800/50">
-                            @foreach(array_slice($showImages, 1, 4) as $img)
-                            <div class="group/thumb aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-500 dark:hover:border-blue-400">
+                            @foreach(array_slice($showImages, 1, 4) as $index => $img)
+                            <div @click="open({{ $index + 1 }})" class="group/thumb aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-500 dark:hover:border-blue-400">
                                 <img src="{{ $img }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-500" loading="lazy">
                             </div>
                             @endforeach
                         </div>
                         @endif
                     </div>
+
+                    {{-- Lightbox Overlay --}}
+                    <template x-teleport="body">
+                         <div x-show="open_lightbox"
+                              x-cloak
+                              @keydown.window.escape="close"
+                              @keydown.window.left="prev"
+                              @keydown.window.right="next"
+                              class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+                              @click.self="close">
+                            <button @click="close"
+                                    class="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                            <button @click="prev"
+                                    class="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            <div class="max-w-[90vw] max-h-[85vh] flex items-center justify-center">
+                                <img :src="currentImage"
+                                     alt="{{ $project->title }}"
+                                     class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl">
+                            </div>
+                            <button @click="next"
+                                    class="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/50 backdrop-blur-sm text-white text-sm font-semibold rounded-full"
+                                 x-text="(currentIndex + 1) + ' / ' + images.length"></div>
+                        </div>
+                    </template>
+
+                    <script>
+                    function galleryLightbox(images) {
+                        return {
+                            images: images,
+                            currentIndex: 0,
+                            open_lightbox: false,
+                            get currentImage() {
+                                return this.images[this.currentIndex];
+                            },
+                            open(index) {
+                                this.currentIndex = index;
+                                this.open_lightbox = true;
+                                document.body.style.overflow = 'hidden';
+                            },
+                            close() {
+                                this.open_lightbox = false;
+                                document.body.style.overflow = '';
+                            },
+                            prev() {
+                                this.currentIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.images.length - 1;
+                            },
+                            next() {
+                                this.currentIndex = this.currentIndex < this.images.length - 1 ? this.currentIndex + 1 : 0;
+                            }
+                        }
+                    }
+                    </script>
                     @else
                     <div class="aspect-video bg-gradient-to-br from-blue-500 via-purple-500 to-purple-600 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900 rounded-2xl flex items-center justify-center shadow-xl relative overflow-hidden animate-slide-in-up">
                         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItaDJ2LTJoLTJ6bTAgNGgtMnYyaDJ2LTJ6bS0yLTJoLTJ2Mmgydi0yem0wLTJoMnYtMmgtMnYyem0tMiAydi0yaC0ydjJoMnptMi00di0yaC0ydjJoMnptMC00aDJ2LTJoLTJ2MnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
