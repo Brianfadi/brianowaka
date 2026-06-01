@@ -241,7 +241,7 @@
         </style>
     </head>
     <body class="font-sans antialiased bg-white dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300">
-        <div class="min-h-screen pt-16 bg-gray-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300">
+        <div class="min-h-screen bg-gray-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 transition-colors duration-300">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

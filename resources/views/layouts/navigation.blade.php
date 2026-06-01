@@ -1,13 +1,13 @@
 <nav x-data="{ open: false, scrolled: false }" 
      x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
      :class="scrolled ? 'bg-white/95 dark:bg-slate-900/95 dark:backdrop-blur-xl border-b border-gray-200/80 dark:border-indigo-500/20 shadow-2xl' : 'bg-gradient-to-r from-white/90 via-white/80 to-blue-50/20 dark:from-slate-900/90 dark:via-indigo-950/80 dark:to-slate-900/20 backdrop-blur-lg border-b border-gray-200/30 dark:border-indigo-500/10 shadow-lg'"
-     class="fixed top-0 z-50 transition-all duration-300">
+     class="sticky top-0 z-50 transition-all duration-300">
     <!-- Enhanced Navigation with Animated Border -->
     <div class="w-full px-4 sm:px-6 lg:px-8 relative">
         <!-- Animated top border -->
         <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         
-        <div class="flex justify-between items-center h-16 relative">
+        <div class="flex justify-between items-center h-16 relative pt-1 sm:pt-0">
             <div class="flex items-center">
                 <!-- Enhanced Logo with Glow Effect -->
                 <div class="shrink-0 flex items-center">
