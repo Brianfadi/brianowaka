@@ -1,6 +1,5 @@
-<header class="sticky top-0 z-50">
 <!-- Topbar -->
-<div class="bg-gradient-to-r from-pink-200 via-purple-200 to-pink-100 dark:from-purple-900 dark:via-pink-900 dark:to-purple-950 text-gray-600 dark:text-gray-200 text-xs sm:text-sm">
+<div class="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-pink-200 via-purple-200 to-pink-100 dark:from-purple-900 dark:via-pink-900 dark:to-purple-950 text-gray-600 dark:text-gray-200 text-xs sm:text-sm">
     <div class="w-full px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-9">
             <div class="flex items-center gap-3 sm:gap-5">
@@ -63,7 +62,7 @@
 <nav x-data="{ open: false, scrolled: false }" 
      x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
      :class="scrolled ? 'bg-white/95 dark:bg-slate-900/95 dark:backdrop-blur-xl border-b border-gray-200/80 dark:border-indigo-500/20 shadow-2xl' : 'bg-gradient-to-r from-white/90 via-white/80 to-blue-50/20 dark:from-slate-900/90 dark:via-indigo-950/80 dark:to-slate-900/20 backdrop-blur-lg border-b border-gray-200/30 dark:border-indigo-500/10 shadow-lg'"
-     class="transition-all duration-300">
+     class="mt-9 sticky top-9 z-50 transition-all duration-300">
     <!-- Enhanced Navigation with Animated Border -->
     <div class="w-full px-4 sm:px-6 lg:px-8 relative">
         <!-- Animated top border -->
@@ -573,5 +572,4 @@
         </div>
     </div>
 </nav>
-</header>
 
