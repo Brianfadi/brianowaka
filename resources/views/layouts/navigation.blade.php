@@ -1,7 +1,7 @@
 <nav x-data="{ open: false, scrolled: false }" 
      x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
      :class="scrolled ? 'bg-white/95 dark:bg-slate-900/95 dark:backdrop-blur-xl border-b border-gray-200/80 dark:border-indigo-500/20 shadow-2xl' : 'bg-gradient-to-r from-white/90 via-white/80 to-blue-50/20 dark:from-slate-900/90 dark:via-indigo-950/80 dark:to-slate-900/20 backdrop-blur-lg border-b border-gray-200/30 dark:border-indigo-500/10 shadow-lg'"
-     class="sticky top-0 z-50 transition-all duration-300">
+     class="fixed top-0 z-50 transition-all duration-300">
     <!-- Enhanced Navigation with Animated Border -->
     <div class="w-full px-4 sm:px-6 lg:px-8 relative">
         <!-- Animated top border -->
